@@ -32,11 +32,10 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Bathroom App</Text>
-        <Text style={styles.instructions}>Bathroom review app!</Text>
-        <View style={styles.buttonGroup}> 
+          <View style={styles.buttonGroup}> 
             <Button title={'LOG IN'}/>
             <Button title={'CREATE AN ACCOUNT'}/>
-        </View>
+          </View>
       </View>
     );
   }
@@ -45,21 +44,20 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    backgroundColor: '#5495ff',
   },
   title: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
+    flex: 1,
+    marginTop: 100,
+    fontSize: 40,
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
   },
   buttonGroup: {
-    marginTop: 500
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 50,
   }
 });
