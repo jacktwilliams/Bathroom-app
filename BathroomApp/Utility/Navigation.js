@@ -1,14 +1,14 @@
 import {createBottomTabNavigator, createAppContainer, createStackNavigator} from 'react-navigation';
 import Login from '../Pages/Login';
-import institutions from '../Pages/institutions';
+import Institution from '../Pages/Institution';
 import { View} from 'react-native'
 
 const Nav = createStackNavigator({
   Login: Login,
-  institutions: institutions,
+  Institution: Institution,
 },
 {
-  initialRouteName: "institutions"
+  initialRouteName: "Institution"
 });
   
 export default Nav;
