@@ -15,15 +15,15 @@ conn.connect();
 
 
 app.get('/', (req, res) => {
+  //function to handle any errors in query process
   let errorHandler = function(error, extraMessage) {
     console.log(error);
     let additional = extraMessage ? extraMessage : "";
     res.status(400).send('Error querying DB\n' + additional);
   }
 
-  console.log('Test. Return WSU bathrooms for Watkins');
-
   let queryInstitution = req.query.institution;
+  console.log("Request recieved for " + queryInstitution);
   let queryString = "select * from organization where org_name = '" + queryInstitution + "'";
   let institutionFullInfo;
   
@@ -31,20 +31,20 @@ app.get('/', (req, res) => {
     if ( error ){
       errorHandler(error);
     } else {
-      console.log(results);
-      //got city info. Get bathrooms
+      console.log("Institution Data\n" + JSON.stringify(results));
       institutionFullInfo = results[0];
 
+      //got institution info. Get building info
       queryString = "select * from building where org_id = " + results[0].org_id + ";"
       conn.query(queryString, (error1, results1) => {
         if (error1) {
           errorHandler(error1);
         }
         else {
-          console.log(results1);
+          console.log("Building Data\n" + JSON.stringify(results1));
           institutionFullInfo.buildings = results1;
-          console.log("Full info\n" + JSON.stringify(institutionFullInfo));
 
+          //got building info. Get bathroom info
           queryString = "select * from bathroom where org_id = " + results[0].org_id +
             " and build_id in (select build_id from organization where org_id = " + results[0].org_id + ");";
           conn.query(queryString, (error2, results2) => {
@@ -52,8 +52,11 @@ app.get('/', (req, res) => {
               errorHandler(error2);
             }
             else {
-              console.log(results2);
+              console.log("Bathroom Data\n" + JSON.stringify(results2));
               institutionFullInfo.allBathrooms = results2;
+
+              //respond to request with all data
+              console.log("Full info\n" + JSON.stringify(institutionFullInfo));
               res.status(200).send(institutionFullInfo);
             }
           });
@@ -63,4 +66,4 @@ app.get('/', (req, res) => {
   });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Server listening on port ${port}!`));
