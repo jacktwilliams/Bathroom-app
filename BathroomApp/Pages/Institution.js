@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator} from 'react-native';
 import { createStackNavigator, createAppContainer, HeaderBackButton  } from "react-navigation";
-import console = require('console');
+//import console = require('console');
 
 const serverAddr = "http://10.19.4.1:3000/?institution=Winona%20State%20University";
 
@@ -12,21 +12,28 @@ export default class Institution extends Component {
     this.state = {
       institutionData: null,
       buildings: null,
+      bathrooms: null,
     };
 
     this.getInstitutionData();
   }
 
   getInstitutionData() {
+    console.log(serverAddr);
     fetch(serverAddr)
-    .then((error, res) => {
-      if(error) {
-        console.log("Error getting institution data from server: " + error);
-      }
-      else {
-        console.log(JSON.stringify(res));
-        //set state here.
-      }
+    .then((res) => {
+      return res.json();
+    })
+    .then((resJson) => {
+      console.log(resJson);
+      this.setState({
+        institutionData: resJson,
+        buildings: resJson.buildings,
+        bathrooms: resJson.allBathrooms,
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting institution data from server\n" + error);
     });
   }
 
