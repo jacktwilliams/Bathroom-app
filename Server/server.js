@@ -15,9 +15,28 @@ conn.connect();
 
 app.get('/', (req, res) => {
   console.log('Test. Return WSU bathrooms for Watkins');
-  let queryString = "select * from bathroom where bathroom.build_id in " +
-    "(select build_id from building where build_name = 'Watkins' and org_id in " +
-    "(select org_id from organization where org_name = 'Winona State University'));"
+  let queryString = "select * from bathroom "; 
+
+  let queryInstitution = req.query.institution;
+  let queryBuilding = req.query.building;
+  let queryGender = req.query.gender;
+
+  if(queryGender) {
+    queryString += "where bathroom.gender = '" + queryGender + "'";
+  }
+
+  if(queryInstitution && queryBuilding) {
+    if(queryGender) {
+      
+    }
+    queryString += "where bathroom.build_id in " +
+    "(select build_id from building where build_name = '" + queryBuilding + "' and org_id in " +
+    "(select org_id from organization where org_name = '" + queryInstitution + "'));"
+  }
+  else if (queryInstitution) {
+    queryString += "where bathroom.org_id in " +
+      "(select org_id from organization where org_name = '" + queryInstitution + "');";
+  }
   conn.query(queryString, (error, results) => {
     if ( error ){
       console.log(error);

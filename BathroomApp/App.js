@@ -7,8 +7,12 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button} from 'react-native';
 import * as firebase from "firebase";
+import Nav from './Utility/Navigation';
+import {createAppContainer} from 'react-navigation';
+import NavigationService from './Utility/NavigationService';
+
+const Navi = createAppContainer(Nav);
 
   firebase.initializeApp = ({
     apiKey: "AIzaSyCej0gTCiJpxcliidq9nboVG53oRdG_Xr4",
@@ -19,45 +23,12 @@ import * as firebase from "firebase";
     messagingSenderId: "776830632776"
   });
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Bathroom App</Text>
-          <View style={styles.buttonGroup}> 
-            <Button title={'LOG IN'}/>
-            <Button title={'CREATE AN ACCOUNT'}/>
-          </View>
-      </View>
+      <Navi ref={navigatorRef => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }} />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    backgroundColor: '#5495ff',
-  },
-  title: {
-    flex: 1,
-    marginTop: 100,
-    fontSize: 40,
-    textAlign: 'center',
-    color: '#333333',
-  },
-  buttonGroup: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 50,
-  }
-});
