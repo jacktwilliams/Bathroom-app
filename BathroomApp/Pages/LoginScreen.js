@@ -101,18 +101,18 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#30405A',
   },
   inputContainer: {
       borderBottomColor: '#F5FCFF',
       backgroundColor: '#FFFFFF',
       borderRadius:30,
       borderBottomWidth: 1,
-      width:250,
+      width:300,
       height:45,
-      marginBottom:20,
+      marginBottom:40,
       flexDirection: 'row',
       alignItems:'center'
   },
@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
     borderRadius:30,
   },
   loginButton: {
-    backgroundColor: "#00b5ec",
+    backgroundColor: "#38BEB5",
+    marginTop: 30
   },
   loginText: {
     color: 'white',

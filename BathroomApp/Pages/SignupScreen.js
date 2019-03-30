@@ -22,17 +22,17 @@ export default class LoginScreen extends Component {
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://img.icons8.com/ultraviolet/40/000000/gender-neutral-user.png'}}/>
           <TextInput autoCapitalize="none" style={styles.inputs}
-              placeholder="Username"
+              placeholder="Enter username"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({username})}/>
+              onChangeText={(username) => this.setState({username})}/>
         </View>
 
 
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
           <TextInput autoCapitalize="none" style={styles.inputs}
-              placeholder="Email"
+              placeholder="Enter email"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({email})}/>
@@ -41,7 +41,7 @@ export default class LoginScreen extends Component {
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
           <TextInput autoCapitalize="none" style={styles.inputs}
-              placeholder="Password"
+              placeholder="Enter password"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
               onChangeText={(password) => this.setState({password})}/>
@@ -63,18 +63,18 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#30405A',
   },
   inputContainer: {
       borderBottomColor: '#F5FCFF',
       backgroundColor: '#FFFFFF',
       borderRadius:30,
       borderBottomWidth: 1,
-      width:250,
+      width:300,
       height:45,
-      marginBottom:20,
+      marginBottom:40,
       flexDirection: 'row',
       alignItems:'center'
   },
@@ -95,14 +95,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
+    marginBottom:100,
+    marginTop:40,
     width:250,
     borderRadius:30,
   },
   loginButton: {
-    backgroundColor: "#00b5ec",
+    backgroundColor: '#38BEB5',
+    
   },
-  loginText: {
+  loginText: {  
     color: 'white',
   }
 });
