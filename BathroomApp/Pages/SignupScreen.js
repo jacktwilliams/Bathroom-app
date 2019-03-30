@@ -62,6 +62,14 @@ export default class LoginScreen extends Component {
     );
   }
 
+  static navigationOptions = ({ navigation }) => {
+    let headerTitle = (<Text style={styles.HeaderTitle}>Insititution</Text>);
+    
+    
+    return {headerTitle, headerStyle: {
+        backgroundColor: '#5495ff'
+     }}
+  }
   _handleCreatePressed = () => {
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
     .then(() => {

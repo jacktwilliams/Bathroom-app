@@ -29,6 +29,13 @@ export default class LoginScreen extends Component {
   
   // firebase.auth().onAuthStateChanged(this._onAuthStateChanged);
   }
+  static navigationOptions = ({ navigation }) => {
+    let headerTitle = (<Text style={styles.HeaderTitle}>Login</Text>);
+    // let headerLeft = <HeaderBackButton onPress={() => navigation.goBack(null)} />
+    return {headerTitle,headerStyle: {
+        backgroundColor: '#5495ff'
+     }}
+  }
   
   render() {
     return (
@@ -110,6 +117,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#30405A',
+  },
+  headerTitle: {
+    fontSize: 30
   },
   logo: {
     justifyContent: 'flex-start',
