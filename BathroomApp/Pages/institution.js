@@ -1,12 +1,33 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator} from 'react-native';
 import { createStackNavigator, createAppContainer, HeaderBackButton  } from "react-navigation";
+import console = require('console');
 
-
+const serverAddr = "http://10.19.4.1:3000/?institution=Winona%20State%20University";
 
 export default class Institution extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      institutionData: null,
+      buildings: null,
+    };
+
+    this.getInstitutionData();
+  }
+
+  getInstitutionData() {
+    fetch(serverAddr)
+    .then((error, res) => {
+      if(error) {
+        console.log("Error getting institution data from server: " + error);
+      }
+      else {
+        console.log(JSON.stringify(res));
+        //set state here.
+      }
+    });
   }
 
   static navigationOptions = ({ navigation }) => {
