@@ -48,11 +48,7 @@ export default class LoginScreen extends Component {
         </View>
 
         <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('create')}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('cancel')}>
-            <Text>Forgot your password?</Text>
+          <Text style={styles.loginText}>Create Account</Text>
         </TouchableHighlight>
       </View>
     );

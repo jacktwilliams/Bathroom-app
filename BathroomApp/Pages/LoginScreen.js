@@ -19,9 +19,6 @@ export default class LoginScreen extends Component {
       password: '',
     }
   }
-  onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
-  }
   
   render() {
     return (
@@ -44,15 +41,15 @@ export default class LoginScreen extends Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this._handleLoginPress}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={this._handleForgotPress}>
             <Text>Forgot your password?</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={this._handleSignupPress}>
             <Text>Register</Text>
         </TouchableHighlight>
       </View>
@@ -66,12 +63,11 @@ export default class LoginScreen extends Component {
   _handleSignupPress = () => {
     this.props.navigation.navigate('SignupScreen');
   }
+
+  _handleForgotPress = () => {
+    alert('Seek not what you want, but what you need and you shall find the answer.');
+  }
 }
-
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {
