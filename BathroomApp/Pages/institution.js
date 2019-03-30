@@ -4,7 +4,7 @@ import { createStackNavigator, createAppContainer, HeaderBackButton  } from "rea
 
 
 
-export default class institution extends Component {
+export default class Institution extends Component {
   constructor(props) {
     super(props);
   }
