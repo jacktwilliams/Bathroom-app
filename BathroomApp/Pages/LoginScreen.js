@@ -23,11 +23,25 @@ export default class LoginScreen extends Component {
           <TextInput style={styles.usernameText}></TextInput>
           <View style={styles.buttonGroup}>
             <Button title={''}/>
-            <Button title={'LOG IN'}/>
-            <Button title={'CREATE AN ACCOUNT'}/>
+            <Button
+              title='LOG IN'
+              onPress={this._handleLoginPress}
+            />
+            <Button
+              title='CREATE AN ACCOUNT'
+              onPress={this._handleSignupPress}
+            />
           </View>
       </View>
     );
+  }
+
+  _handleLoginPress = () => {
+    this.props.navigation.navigate('AppNav');
+  };
+  
+  _handleSignupPress = () => {
+    this.props.navigation.navigate('SignupScreen');
   }
 }
 
