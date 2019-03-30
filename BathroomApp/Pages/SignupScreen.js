@@ -25,7 +25,7 @@ export default class LoginScreen extends Component {
 
         <View style={styles.logo}>
           <Image source={require('../images/goGuide.png')}/> 
-      
+          <Image source={require('../images/tp.png')}/>
         </View>
 
         <View style={styles.inputContainer}>
@@ -87,6 +87,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#30405A',
   },
+  logo: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 20
+  },
   inputContainer: {
       borderBottomColor: '#F5FCFF',
       backgroundColor: '#FFFFFF',
@@ -115,8 +120,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:100,
-    marginTop:40,
+    marginBottom:60,
+    marginTop:10,
     width:250,
     borderRadius:30,
   },

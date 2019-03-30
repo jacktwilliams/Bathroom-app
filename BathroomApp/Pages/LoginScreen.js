@@ -33,6 +33,12 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+
+        <View style={styles.logo}>
+          <Image source={require('../images/goGuide.png')}/> 
+          <Image source={require('../images/tp.png')}/>
+        </View>
+
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
           <TextInput autoCapitalize="none" style={styles.inputs}
@@ -101,9 +107,14 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#30405A',
+  },
+  logo: {
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 20
   },
   inputContainer: {
       borderBottomColor: '#F5FCFF',
@@ -112,7 +123,8 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       width:300,
       height:45,
-      marginBottom:40,
+      marginTop: 20,
+      marginBottom:20,
       flexDirection: 'row',
       alignItems:'center'
   },
@@ -129,20 +141,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonContainer: {
-    height:45,
+    height:40,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:20,
+    marginBottom:10,
+    marginTop:10,
     width:250,
     borderRadius:30,
   },
   loginButton: {
     backgroundColor: '#38BEB5',
-    marginTop: 30
+
+  },
+  linkContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   loginText: {
     color: 'white',
   }
 });
+
  
