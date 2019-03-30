@@ -21,7 +21,7 @@ export default class LoginScreen extends Component {
 
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://img.icons8.com/ultraviolet/40/000000/gender-neutral-user.png'}}/>
-          <TextInput style={styles.inputs}
+          <TextInput autoCapitalize="none" style={styles.inputs}
               placeholder="Username"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
@@ -31,7 +31,7 @@ export default class LoginScreen extends Component {
 
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
+          <TextInput autoCapitalize="none" style={styles.inputs}
               placeholder="Email"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
@@ -40,7 +40,7 @@ export default class LoginScreen extends Component {
         
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
+          <TextInput autoCapitalize="none" style={styles.inputs}
               placeholder="Password"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
