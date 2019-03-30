@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Button } from 'react-native';
 
-export default class InstitutionList extends Component {
+export default class InstitutionScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -11,8 +11,7 @@ export default class InstitutionList extends Component {
       <View style={styles.container}>
         <Text style={styles.title}>Bathroom App</Text>
           <View style={styles.buttonGroup}> 
-            <Button title={'LOG IN'}/>
-            <Button title={'CREATE AN ACCOUNT'}/>
+            <Button title={'Institution'}/>
           </View>
       </View>
     );

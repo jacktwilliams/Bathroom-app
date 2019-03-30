@@ -1,14 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { InstitutionList } from '../Pages/InstitutionList';
+import InstitutionScreen from '../Pages/InstitutionScreen';
 
 const AppNav = createStackNavigator({
-  Home: InstitutionList
+  InstitutionScreen: InstitutionScreen
 },
 {
-  initialRouteName: 'Home'
+  initialRouteName: "InstitutionScreen"
 });
-    
+  
 export default AppNav;
 
 // This will just point to the main screen that says "this is the app" for now

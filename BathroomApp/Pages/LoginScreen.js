@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import * as firebase from "firebase";
 
 firebase.initializeApp = ({
@@ -11,7 +11,7 @@ firebase.initializeApp = ({
   messagingSenderId: "776830632776"
 });
 
-export default class Login extends Component {
+export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
   }
@@ -20,7 +20,9 @@ export default class Login extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Bathroom App</Text>
-          <View style={styles.buttonGroup}> 
+          <TextInput style={styles.usernameText}></TextInput>
+          <View style={styles.buttonGroup}>
+            <Button title={''}/>
             <Button title={'LOG IN'}/>
             <Button title={'CREATE AN ACCOUNT'}/>
           </View>
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    backgroundColor: '#5495ff',
+    backgroundColor: '#ffffff',
   },
   title: {
     flex: 1,

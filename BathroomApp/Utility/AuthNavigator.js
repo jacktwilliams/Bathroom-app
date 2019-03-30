@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { createStackNavigator } from 'react-navigation';
-import { Login } from '../Pages/Login';
+import LoginScreen from '../Pages/LoginScreen';
 
 const AuthNav = createStackNavigator({
-   Login : Login
+   LoginScreen: LoginScreen
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "LoginScreen"
   });
     
   export default AuthNav;
