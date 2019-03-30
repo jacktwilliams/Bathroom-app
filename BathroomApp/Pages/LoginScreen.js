@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight, Image, Alert } from 'react-native';
-import * as firebase from "firebase";
-
-firebase.initializeApp = ({
-  apiKey: "AIzaSyCej0gTCiJpxcliidq9nboVG53oRdG_Xr4",
-  authDomain: "bathroomapp-5daa4.firebaseapp.com",
-  databaseURL: "https://bathroomapp-5daa4.firebaseio.com",
-  projectId: "bathroomapp-5daa4",
-  storageBucket: "bathroomapp-5daa4.appspot.com",
-  messagingSenderId: "776830632776"
-});
+import * as firebase from 'firebase';
 
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
       email   : '',
-      password: '',
-    }
+      password: ''
+    };
   }
   
   render() {
@@ -57,7 +48,13 @@ export default class LoginScreen extends Component {
   }
 
   _handleLoginPress = () => {
-    this.props.navigation.navigate('AppNav');
+    //this.props.navigation.navigate('AppNav');
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(() => {
+      this.props.navigation.navigate('AppNav');
+    }).catch((error) => {
+      console.log(error);
+    });
   };
   
   _handleSignupPress = () => {
