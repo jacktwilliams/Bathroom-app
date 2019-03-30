@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight, Image, Alert } from 'react-native';
-import * as firebase from "firebase";
 
-firebase.initializeApp = ({
-  apiKey: "AIzaSyCej0gTCiJpxcliidq9nboVG53oRdG_Xr4",
-  authDomain: "bathroomapp-5daa4.firebaseapp.com",
-  databaseURL: "https://bathroomapp-5daa4.firebaseio.com",
-  projectId: "bathroomapp-5daa4",
-  storageBucket: "bathroomapp-5daa4.appspot.com",
-  messagingSenderId: "776830632776"
-});
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -17,6 +8,7 @@ export default class LoginScreen extends Component {
     state = {
       email   : '',
       password: '',
+      username: ''
     }
   }
   onClickListener = (viewId) => {
@@ -26,6 +18,17 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+
+        <View style={styles.inputContainer}>
+          {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/> */}
+          <TextInput style={styles.inputs}
+              placeholder="Username"
+              secureTextEntry={true}
+              underlineColorAndroid='transparent'
+              onChangeText={(password) => this.setState({username})}/>
+        </View>
+
+
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
           <TextInput style={styles.inputs}
@@ -44,16 +47,12 @@ export default class LoginScreen extends Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('create')}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('cancel')}>
             <Text>Forgot your password?</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>Register</Text>
         </TouchableHighlight>
       </View>
     );
@@ -111,4 +110,3 @@ const styles = StyleSheet.create({
     color: 'white',
   }
 });
- 
