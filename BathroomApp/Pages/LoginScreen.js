@@ -2,13 +2,32 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight, Image, Alert } from 'react-native';
 import * as firebase from 'firebase';
 
+var config = {
+    apiKey: "AIzaSyCej0gTCiJpxcliidq9nboVG53oRdG_Xr4",
+    authDomain: "bathroomapp-5daa4.firebaseapp.com",
+    databaseURL: "https://bathroomapp-5daa4.firebaseio.com",
+    projectId: "bathroomapp-5daa4",
+    storageBucket: "bathroomapp-5daa4.appspot.com",
+    messagingSenderId: "776830632776"
+}
+
+firebase.initializeApp(config);
+
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email   : '',
-      password: ''
+      password: '',
+      authenticated: false
     };
+
+
+  //if(!firebase.apps.length) {
+      //const app = firebase.initializeApp({});
+  //}
+  
+  // firebase.auth().onAuthStateChanged(this._onAuthStateChanged);
   }
   
   render() {
@@ -47,13 +66,26 @@ export default class LoginScreen extends Component {
     );
   }
 
+//   _onAuthStateChanged = (user) => {
+//     this.setState({authenticated: !!user});
+//     if(!this.authenticated){
+//       alert("Invalid credentials")
+
+//     }
+//     else{
+//       this.props.navigation.navigate('AppNav'); //not if we should go back to login or auth screen
+
+//     }
+// }
+
+
   _handleLoginPress = () => {
     //this.props.navigation.navigate('AppNav');
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then(() => {
       this.props.navigation.navigate('AppNav');
     }).catch((error) => {
-      console.log(error);
+      alert("credentials invalid. Please try again")
     });
   };
   

@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import * as firebase from 'firebase';
 
-var config = {
-    apiKey: "AIzaSyCej0gTCiJpxcliidq9nboVG53oRdG_Xr4",
-    authDomain: "bathroomapp-5daa4.firebaseapp.com",
-    databaseURL: "https://bathroomapp-5daa4.firebaseio.com",
-    projectId: "bathroomapp-5daa4",
-    storageBucket: "bathroomapp-5daa4.appspot.com",
-    messagingSenderId: "776830632776"
-}
+// var config = {
+//     apiKey: "AIzaSyCej0gTCiJpxcliidq9nboVG53oRdG_Xr4",
+//     authDomain: "bathroomapp-5daa4.firebaseapp.com",
+//     databaseURL: "https://bathroomapp-5daa4.firebaseio.com",
+//     projectId: "bathroomapp-5daa4",
+//     storageBucket: "bathroomapp-5daa4.appspot.com",
+//     messagingSenderId: "776830632776"
+// }
 
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
 
 export default class AuthLoadingScreen extends Component {
 
