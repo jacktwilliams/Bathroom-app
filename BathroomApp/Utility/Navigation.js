@@ -8,7 +8,7 @@ const Nav = createStackNavigator({
   App: AppNav
 },
 {
-  initialRouteName: "institutions"
+  initialRouteName: "Auth"
 });
   
 export default Nav;
