@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import * as firebase from 'firebase';
 
-const firebaseConfig = {
+var config = {
     apiKey: "AIzaSyCej0gTCiJpxcliidq9nboVG53oRdG_Xr4",
     authDomain: "bathroomapp-5daa4.firebaseapp.com",
     databaseURL: "https://bathroomapp-5daa4.firebaseio.com",
     projectId: "bathroomapp-5daa4",
     storageBucket: "bathroomapp-5daa4.appspot.com",
     messagingSenderId: "776830632776"
-};
+}
+
+firebase.initializeApp(config);
 
 export default class AuthLoadingScreen extends Component {
 
@@ -22,9 +24,10 @@ export default class AuthLoadingScreen extends Component {
         };
 
         
-        if(!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+
+        //if(!firebase.apps.length) {
+            //const app = firebase.initializeApp({});
+        //}
         
         firebase.auth().onAuthStateChanged(this._onAuthStateChanged);
     }
@@ -36,8 +39,10 @@ export default class AuthLoadingScreen extends Component {
     }
 
     render() {
-        <View>
-            <ActivityIndicator size="rage" color = "#0000ff" />
-        </View>
+        return (
+            <View>
+                <ActivityIndicator size="large" color = "#0000ff" />
+            </View>
+        );
     }
 }
