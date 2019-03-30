@@ -63,22 +63,14 @@ export default class LoginScreen extends Component {
   }
 
   _handleCreatePressed = () => {
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-    .then(() => {
-      //Push the UID and username to the SQL server
-      //this.state.username
-      //firebase.auth().currentUser.UID i think would give UID, needs to be tested
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       this.props.navigation.navigate('AppNav');
     }).catch((error) => {
-      alert(error.message);
+      console.log(error);
     });
+
   }
 }
-
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {

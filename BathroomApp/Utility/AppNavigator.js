@@ -1,12 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import InstitutionScreen from '../Pages/InstitutionScreen';
+import Institution from '../Pages/institution';
 
 const AppNav = createStackNavigator({
-  InstitutionScreen: InstitutionScreen
+  Institution: Institution
 },
 {
-  initialRouteName: "InstitutionScreen"
+  initialRouteName: "Institution"
 });
   
 export default AppNav;
