@@ -74,7 +74,7 @@ export default class LoginScreen extends Component {
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {
       this.props.navigation.navigate('AppNav');
     }).catch((error) => {
-      console.log(error);
+      alert(error);
     });
 
   }
