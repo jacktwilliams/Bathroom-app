@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator} from 'react-native';
 import { createStackNavigator, createAppContainer, HeaderBackButton  } from "react-navigation";
-//import console = require('console');
+
 
 const serverAddr = "http://10.19.4.1:3000/?institution=Winona%20State%20University";
 
@@ -13,6 +13,7 @@ export default class Institution extends Component {
       institutionData: null,
       buildings: null,
       bathrooms: null,
+      buildingsArray: [],
     };
 
     this.getInstitutionData();
@@ -31,6 +32,18 @@ export default class Institution extends Component {
         buildings: resJson.buildings,
         bathrooms: resJson.allBathrooms,
       });
+      console.log(resJson.buildings.length);
+      console.log(resJson.buildings[1].build_name);
+      let buildingsArray = [];
+      var arrayLength = resJson.buildings.length;
+      for (var i=0; i<arrayLength; i++) {
+        buildingsArray[i] = resJson.buildings[i].build_name;
+        console.log(i + " contains the building information for " + buildingsArray[i]);
+      }
+      this.setState({
+          buildingsArray: buildingsArray
+      });
+    
     })
     .catch((error) => {
       console.log("Error getting institution data from server\n" + error);
@@ -45,7 +58,7 @@ export default class Institution extends Component {
         containerStyle={{margin: 5, padding: 10, borderRadius: 10, backgroundColor: "darkviolet"}}
         style={styles.headerButton}></Button>);
     return {headerTitle, headerRight, headerLeft,headerStyle: {
-        backgroundColor: '#5495ff'
+        backgroundColor: '#30405A'
      }}
   }
   
@@ -54,9 +67,17 @@ export default class Institution extends Component {
     return (
       <View style={styles.container}>
 
-        <View style={styles.BuildingComponents}>
-
-        </View>
+        <FlatList 
+            data={this.state.buildingsArray}
+            keyExtractor={(x,i) => i}
+            renderItem={({item}) =>
+            // <View style={styles.borderView}>
+                <Text style={styles.listedBuilding}>
+                    {`${item}`}
+                </Text>
+            // </View>
+        }
+        />
 
       </View>
     );
@@ -74,7 +95,9 @@ const styles = StyleSheet.create({
   HeaderTitle: {
     fontSize: 25
   },
-  BuildingComponents: {
-    
+  listedBuilding: {
+    marginLeft: 20,
+    marginTop: 30,
+    fontSize: 20,
   }
 });
