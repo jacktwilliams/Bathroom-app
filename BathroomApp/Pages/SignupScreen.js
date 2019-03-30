@@ -18,7 +18,15 @@ export default class LoginScreen extends Component {
 
   render() {
     return (
+
+      
+
       <View style={styles.container}>
+
+        <View style={styles.logo}>
+          <Image source={require('../images/goGuide.png')}/> 
+      
+        </View>
 
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://img.icons8.com/ultraviolet/40/000000/gender-neutral-user.png'}}/>
