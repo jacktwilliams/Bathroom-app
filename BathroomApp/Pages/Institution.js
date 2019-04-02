@@ -3,7 +3,7 @@ import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndic
 import { createStackNavigator, createAppContainer, HeaderBackButton  } from "react-navigation";
 
 
-const serverAddr = "http://10.19.4.1:3000/?institution=Winona%20State%20University";
+const serverAddr = "http://10.19.88.174:3000/?institution=Winona%20State%20University";
 
 export default class Institution extends Component {
   constructor(props) {
@@ -71,14 +71,11 @@ export default class Institution extends Component {
             data={this.state.buildingsArray}
             keyExtractor={(x,i) => i}
             renderItem={({item}) =>
-            // <View style={styles.borderView}>
                 <Text style={styles.listedBuilding}>
                     {`${item}`}
                 </Text>
-            // </View>
         }
         />
-
       </View>
     );
   }
