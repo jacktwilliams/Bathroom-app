@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import InstitutionScreen from '../Pages/InstitutionScreen';
 import Institution from '../Pages/Institution';
-import Building from '../Pages/Building';
-import Bathroom from '../Pages/Bathroom';
+import Building from '../Pages/BuildingScreen';
+import Bathroom from '../Pages/BathroomScreen';
 
 const AppNav = createStackNavigator({
   Institution: Institution

@@ -61,7 +61,7 @@ export default class Building extends Component {
         backgroundColor: '#30405A'
      }}
   }
-  
+
 
   render() {
     return (
