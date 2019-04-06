@@ -3,7 +3,7 @@ import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndic
 import { createStackNavigator, createAppContainer, HeaderBackButton  } from "react-navigation";
 
 
-const serverAddr = "http://10.19.4.1:3000/?institution=Winona%20State%20University";
+const serverAddr = "http://192.168.1.3:3000/?institution=Winona%20State%20University";
 
 export default class Institution extends Component {
   constructor(props) {
@@ -11,9 +11,10 @@ export default class Institution extends Component {
 
     this.state = {
       institutionData: null,
-      buildings: null,
+      buildings: [],
       bathrooms: null,
-      buildingsArray: [],
+      reviews: null,
+      renderList: false, //flip this boolean to re-render flatlist
     };
 
     this.getInstitutionData();
@@ -26,24 +27,16 @@ export default class Institution extends Component {
       return res.json();
     })
     .then((resJson) => {
-      console.log(resJson);
+      console.log(resJson.buildings);
       this.setState({
         institutionData: resJson,
         buildings: resJson.buildings,
         bathrooms: resJson.allBathrooms,
+        reviews: resJson.allReviews,
+        renderList: !this.state.renderList,
       });
       console.log(resJson.buildings.length);
       console.log(resJson.buildings[1].build_name);
-      let buildingsArray = [];
-      var arrayLength = resJson.buildings.length;
-      for (var i=0; i<arrayLength; i++) {
-        buildingsArray[i] = resJson.buildings[i].build_name;
-        console.log(i + " contains the building information for " + buildingsArray[i]);
-      }
-      this.setState({
-          buildingsArray: buildingsArray
-      });
-    
     })
     .catch((error) => {
       console.log("Error getting institution data from server\n" + error);
@@ -68,15 +61,15 @@ export default class Institution extends Component {
       <View style={styles.container}>
 
         <FlatList 
-            data={this.state.buildingsArray}
-            keyExtractor={(x,i) => i}
-            renderItem={({item}) =>
-            // <View style={styles.borderView}>
-                <Text style={styles.listedBuilding}>
-                    {`${item}`}
-                </Text>
-            // </View>
-        }
+            data={this.state.buildings}
+            extraData={this.state.renderList}
+            keyExtractor={(item, index) => {
+              return item.build_id.toString()
+            }}
+            renderItem={(item) => {
+              console.log(item)
+              return (<Text>{item.item.build_name}</Text>);
+            }}
         />
 
       </View>
