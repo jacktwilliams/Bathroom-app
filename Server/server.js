@@ -71,7 +71,7 @@ app.get('/', (req, res) => {
               errorHandler(error2);
             }
             else {
-              institutionFullInfo.reviews = results2;
+              institutionFullInfo.allReviews = results2;
               gotRevs = true;
               returnData(institutionFullInfo);
             }

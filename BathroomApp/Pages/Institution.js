@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator} from 'react-native';
-import { createStackNavigator, createAppContainer, HeaderBackButton  } from "react-navigation";
+import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
 
 
 const serverAddr = "http://192.168.1.3:3000/?institution=Winona%20State%20University";
+const accentColor = "#30405A"
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 export default class Institution extends Component {
+
+ static navigationOptions = {
+   title: 'Winona State University',
+   headerStyle: {
+    backgroundColor: accentColor
+  }
+ }
+
   constructor(props) {
     super(props);
 
@@ -18,6 +28,38 @@ export default class Institution extends Component {
     };
 
     this.getInstitutionData();
+  }
+
+  //puts each bathroom as a json property of the correct building
+  moveBathroomsAndReviewsIntoBuildings() {
+    //initialize each building with an empty bathroom list and empty review list
+    let buildings = this.state.buildings;
+    let bathrooms = this.state.bathrooms;
+    let reviews = this.state.reviews;
+    
+    for(let i = 0; i < buildings.length; ++i) {
+      buildings[i].bathrooms = [];
+      buildings[i].reviews = [];
+    }
+
+    for(let i = 0; i < bathrooms.length; ++i) {
+      let currentBathroom = bathrooms[i];
+      for(let x = 0; x < buildings.length; ++x) {
+        if(buildings[x].build_id === currentBathroom.build_id) {
+          buildings[x].bathrooms.push(currentBathroom);
+        }
+      } 
+    }
+
+    for(let i = 0; i < reviews.length; ++i) {
+      let currentReview = reviews[i];
+      for(let x = 0; x < buildings.length; ++x) {
+        if(buildings[x].build_id === currentReview.build_id) {
+          buildings[x].reviews.push(currentReview);
+        }
+      }
+    }
+    console.log(JSON.stringify(buildings));
   }
 
   getInstitutionData() {
@@ -35,27 +77,14 @@ export default class Institution extends Component {
         reviews: resJson.allReviews,
         renderList: !this.state.renderList,
       });
-      console.log(resJson.buildings.length);
-      console.log(resJson.buildings[1].build_name);
+      this.moveBathroomsAndReviewsIntoBuildings();
+      console.log("Recieved institution data and parsed reviews and bathrooms into the correct buildings.");
     })
     .catch((error) => {
       console.log("Error getting institution data from server\n" + error);
     });
   }
-
-  static navigationOptions = ({ navigation }) => {
-    let headerTitle = (<Text style={styles.HeaderTitle}>Insititution</Text>);
-    let headerLeft = <HeaderBackButton onPress={() => navigation.goBack(null)} />
-    let headerRight = (<Button 
-        title={"Next"}
-        containerStyle={{margin: 5, padding: 10, borderRadius: 10, backgroundColor: "darkviolet"}}
-        style={styles.headerButton}></Button>);
-    return {headerTitle, headerRight, headerLeft,headerStyle: {
-        backgroundColor: '#30405A'
-     }}
-  }
   
-
   render() {
     return (
       <View style={styles.container}>
@@ -67,10 +96,32 @@ export default class Institution extends Component {
               return item.build_id.toString()
             }}
             renderItem={(item) => {
-              console.log(item)
-              return (<Text>{item.item.build_name}</Text>);
+              return (
+                <TouchableOpacity 
+                  onPress={() => {
+                    console.log("Sending item: " + JSON.stringify(item.item));
+                    this.props.navigation.navigate("Building", {buildingData: item.item});
+                }}>
+                  <Text>{item.item.build_name}</Text>
+                </TouchableOpacity>
+              );
             }}
         />
+
+        <View style={styles.tabContainer}>
+            <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
+              <Text style={styles.selectedText}>Buildings</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tabButton, styles.notSelectedButton]}
+              onPress={() => {
+                console.log(JSON.stringify(this.props.navigation));
+                this.props.navigation.navigate("ReviewList", {dataHolder: this.state.institutionData});
+              }}  
+            >
+              <Text style={styles.notSelectedText}>All Reviews</Text>
+            </TouchableOpacity>
+        </View>
 
       </View>
     );
@@ -82,7 +133,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     backgroundColor: '#FFF',
   },
   HeaderTitle: {
@@ -92,5 +143,31 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 30,
     fontSize: 20,
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: accentColor,
+    height: height * .07,
+  },
+  selectedButton: {
+    borderRightWidth: 2,
+    borderRightColor: 'black',
+  },
+  notSelectedButton: {
+
+  },
+  selectedText: {
+
+  },
+  notSelectedText: {
+
+  },
+  tabButton: {
+    width: width * .49,
+    height: height * .07,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
