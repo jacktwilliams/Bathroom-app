@@ -11,6 +11,16 @@ var conn = mysql.createConnection({
     database : 'bathroom'
 });
 
+var admin = require('firebase-admin');
+
+var serviceAccount = require();
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://bathroomapp-5daa4.firebaseio.com"
+});
+
+
 conn.connect();
 
 
