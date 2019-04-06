@@ -31,7 +31,6 @@ app.get('/', (req, res) => {
     if ( error ){
       errorHandler(error);
     } else {
-      console.log("Institution Data\n" + JSON.stringify(results));
       institutionFullInfo = results[0];
 
       //got institution info. Get building info
@@ -41,23 +40,40 @@ app.get('/', (req, res) => {
           errorHandler(error1);
         }
         else {
-          console.log("Building Data\n" + JSON.stringify(results1));
-          institutionFullInfo.buildings = results1;
+          institutionFullInfo.buildings = results1;  
+          var gotBaths = false;
+          var gotRevs = false;
+          
+          function returnData(dat) {
+            if(gotBaths && gotRevs) {
+              res.status(200).send(dat);
+              console.log("Response sent.");
+            }
+          }
 
           //got building info. Get bathroom info
-          queryString = "select * from bathroom where org_id = " + results[0].org_id +
-            " and build_id in (select build_id from organization where org_id = " + results[0].org_id + ");";
+          queryString = "select * from bathroom where org_id = " + results[0].org_id + ";";
           conn.query(queryString, (error2, results2) => {
             if(error2) {
               errorHandler(error2);
             }
             else {
-              console.log("Bathroom Data\n" + JSON.stringify(results2));
               institutionFullInfo.allBathrooms = results2;
+              gotBaths = true;
+              returnData(institutionFullInfo);
+            }
+          });
 
-              //respond to request with all data
-              console.log("Full info\n" + JSON.stringify(institutionFullInfo));
-              res.status(200).send(institutionFullInfo);
+          //also get all reviews
+          queryString = "select * from review where org_id = " + results[0].org_id + ";";
+          conn.query(queryString, (error2, results2) => {
+            if (error2) {
+              errorHandler(error2);
+            }
+            else {
+              institutionFullInfo.reviews = results2;
+              gotRevs = true;
+              returnData(institutionFullInfo);
             }
           });
         }
