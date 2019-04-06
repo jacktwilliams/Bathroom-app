@@ -13,7 +13,7 @@ var conn = mysql.createConnection({
 
 var admin = require('firebase-admin');
 
-var serviceAccount = require();
+var serviceAccount = require('./bathroomapp-5daa4-firebase-adminsdk-lswkz-0c46f33157.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
