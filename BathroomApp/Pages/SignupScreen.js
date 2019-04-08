@@ -63,7 +63,7 @@ export default class LoginScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    let headerTitle = (<Text style={styles.HeaderTitle}>Insititution</Text>);
+    let headerTitle = (<Text style={styles.HeaderTitle}>Register</Text>);
     
     
     return {headerTitle, headerStyle: {

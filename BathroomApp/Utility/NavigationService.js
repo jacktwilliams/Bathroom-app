@@ -1,4 +1,4 @@
-/* Usually you navigate by passing the navigation props to all pages.
+/*  Usually you navigate by passing the navigation props to all pages.
     If you need to navigate while in a different class which hasn't been sent the prop,
     you can use this service.
 */

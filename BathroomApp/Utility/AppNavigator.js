@@ -13,4 +13,3 @@ const AppNav = createStackNavigator({
 export default AppNav;
 
 // This will just point to the main screen that says "this is the app" for now
-
