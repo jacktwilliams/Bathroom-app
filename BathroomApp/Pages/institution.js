@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
 
 
-const serverAddr = "http://192.168.1.3:3000/?institution=Winona%20State%20University";
-const accentColor = "#30405A"
+const serverAddr = "http://192.168.0.9:3000/?institution=Winona%20State%20University";
+const accentColor = "#5495ff";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -102,7 +102,9 @@ export default class Institution extends Component {
                     console.log("Sending item: " + JSON.stringify(item.item));
                     this.props.navigation.navigate("Building", {buildingData: item.item});
                 }}>
-                  <Text>{item.item.build_name}</Text>
+                <View style={styles.border}>
+                  <Text style={styles.buildingNameStyling}>{item.item.build_name}</Text>
+                </View>
                 </TouchableOpacity>
               );
             }}
@@ -159,15 +161,27 @@ const styles = StyleSheet.create({
 
   },
   selectedText: {
-
+    fontSize: 18
   },
   notSelectedText: {
-
+    fontSize: 18
   },
   tabButton: {
     width: width * .49,
     height: height * .07,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buildingNameStyling: {
+    marginLeft: 15,
+    marginTop: 12,
+    marginBottom: 12,
+    fontSize: 20
+  },
+  border: {
+    borderBottomColor: "#30405A",
+    borderBottomWidth: .17,
+    marginLeft: 10,
+    marginRight: 10
   }
 });

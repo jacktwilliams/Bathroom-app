@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
 
 
-const accentColor = "#30405A"
+const accentColor = "#5495ff"
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -46,7 +46,9 @@ export default class Building extends Component {
             renderItem={(item) => {
               item = item.item;
               return (
-                <Text>{this.state.buildingData.build_name + " " + item.floor_num + item.gender}</Text>
+                <View style={styles.border}>
+                    <Text style={styles.buildingNameStyling}>{this.state.buildingData.build_name + " " + item.floor_num + item.gender}</Text>
+                </View>
               );
             }}
         />
@@ -100,15 +102,27 @@ const styles = StyleSheet.create({
 
   },
   selectedText: {
-
+    fontSize: 18
   },
   notSelectedText: {
-
+    fontSize: 18
   },
   tabButton: {
     width: width * .49,
     height: height * .07,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buildingNameStyling: {
+    marginLeft: 15,
+    marginTop: 12,
+    marginBottom: 12,
+    fontSize: 20
+  },
+  border: {
+    borderBottomColor: "#30405A",
+    borderBottomWidth: .17,
+    marginLeft: 10,
+    marginRight: 10
   }
 });
