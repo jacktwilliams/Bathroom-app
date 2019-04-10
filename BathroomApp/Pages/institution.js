@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
-import consts from '../Utility/Constants';
-
-
-const serverAddr = consts.addr + "?institution=Winona%20State%20University";
 import StarRating from 'react-native-star-rating';
+
+const serverAddr = "http://192.168.0.9:3000/?institution=Winona%20State%20University";
 const accentColor = "#5495ff";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -113,9 +111,9 @@ export default class Institution extends Component {
         />
 
         <View style={styles.tabContainer}>
-            {/* <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
+            <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
               <Text style={styles.selectedText}>Buildings</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <TouchableOpacity 
               style={[styles.tabButton, styles.notSelectedButton]}
               onPress={() => {
@@ -168,7 +166,7 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   tabButton: {
-    width: width,
+    width: width * .49,
     height: height * .07,
     justifyContent: 'center',
     alignItems: 'center',
