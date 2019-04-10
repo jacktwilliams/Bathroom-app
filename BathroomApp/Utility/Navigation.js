@@ -7,7 +7,7 @@ const Nav = createSwitchNavigator({
   AuthNav: AuthNav
 },
 {
-  initialRouteName: "AppNav"
+  initialRouteName: "AuthNav"
 });
   
 export default Nav;

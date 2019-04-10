@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   border: {
     borderBottomColor: "#30405A",
-    borderBottomWidth: .17,
+    borderBottomWidth: .2,
     marginLeft: 10,
     marginRight: 10,
     flex: 1, 
