@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
 
-const accentColor = "#30405A"
+const accentColor = "#5495ff"
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -63,7 +63,9 @@ export default class ReviewList extends Component {
               item = item.item;
               console.log(JSON.stringify(item));
               return (
-                <Text>{item.review_text}</Text>
+                <View style={styles.border}>
+                    <Text style={styles.buildingNameStyling}>{item.review_text}</Text>
+                </View>
               );
             }}
         />
@@ -122,5 +124,19 @@ const styles = StyleSheet.create({
     height: height * .07,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buildingNameStyling: {
+    marginLeft: 18,
+    marginTop: 20,
+    marginBottom: 30,
+    fontSize: 20
+  },
+  border: {
+    borderBottomColor: "#30405A",
+    borderBottomWidth: .2,
+    marginLeft: 10,
+    marginRight: 10,
+    flex: 1, 
+    flexDirection: 'row'
   }
 });
