@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
-
+import StarRating from 'react-native-star-rating';
 
 const serverAddr = "http://192.168.0.9:3000/?institution=Winona%20State%20University";
 const accentColor = "#5495ff";
@@ -130,7 +130,6 @@ export default class Institution extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -173,15 +172,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buildingNameStyling: {
-    marginLeft: 15,
-    marginTop: 12,
-    marginBottom: 12,
+    marginLeft: 18,
+    marginTop: 20,
+    marginBottom: 30,
     fontSize: 20
   },
   border: {
     borderBottomColor: "#30405A",
     borderBottomWidth: .17,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    flex: 1, 
+    flexDirection: 'row'
+  },
+  stars: {
+    marginLeft: 'auto',
+    marginTop: 15
   }
 });
