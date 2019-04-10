@@ -17,7 +17,9 @@ export default class ReviewList extends Component {
   else if (dataHolder.bathrooms) { //came here from buildings page
     title = dataHolder.build_name + " Reviews";
   }
-  //else if we came from bathroom page once it is created.
+  else {
+    title = dataHolder.title + " Reviews";
+  }
   return {
     title: title,
     headerStyle: {
@@ -34,10 +36,9 @@ export default class ReviewList extends Component {
     if (dataHolder.buildings) { //came here from institution page
       revList = dataHolder.allReviews;
     }
-    else if (dataHolder.bathrooms) { //came here from buildings page
+    else { //came here from buildings or bathrooms page
       revList = dataHolder.reviews;
     }
-    //else if we came from bathroom page once it is created.
 
     this.state = {
       reviews: revList,

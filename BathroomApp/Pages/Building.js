@@ -27,10 +27,29 @@ export default class Building extends Component {
       reviews: buildingData.reviews,
       renderList: false, //flip this boolean to re-render flatlist
     };
-
-    console.log("Our bathrooms:\n" + this.state.bathrooms);
     
     //here we will want to parse the reviews into the corresponding bathrooms.
+    //we will also give the bathrooms a title here.
+    this.moveReviewsIntoBathrooms();
+  }
+
+  moveReviewsIntoBathrooms() {
+    let bathrooms = this.state.bathrooms;
+    let reviews = this.state.reviews;
+    console.log("Reviews\n" + JSON.stringify(reviews));
+    for (let i = 0; i < bathrooms.length; ++i) {
+      bathrooms[i].title = this.state.buildingData.build_name + " " + bathrooms[i].floor_num + bathrooms[i].gender
+      bathrooms[i].reviews = [];
+    }
+    for (let i = 0; i < reviews.length; ++i) {
+      let currentRev = reviews[i];
+      for (let x = 0; x < bathrooms.length; ++i) {
+        if(currentRev.bath_id === bathrooms[x].bath_id) {
+          bathrooms[x].reviews.push(currentRev);
+        }
+      }
+    }
+    console.log("Bathrooms: \n\n" + JSON.stringify(this.state.bathrooms));
   }
 
   render() {
@@ -44,17 +63,23 @@ export default class Building extends Component {
               return item.bath_id.toString()
             }}
             renderItem={(item) => {
-              item = item.item;
+              console.log(JSON.stringify(item));
               return (
-                <Text>{this.state.buildingData.build_name + " " + item.floor_num + item.gender}</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.navigate("ReviewList", {dataHolder: item.item});
+                  }}
+                >
+                  <Text>{this.state.buildingData.build_name + " " + item.item.floor_num + item.item.gender}</Text>
+                </TouchableOpacity>
               );
             }}
         />
 
         <View style={styles.tabContainer}>
-            <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
+            {/* <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
               <Text style={styles.selectedText}>Buildings</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity 
               style={[styles.tabButton, styles.notSelectedButton]}
               onPress={() => {
@@ -106,7 +131,7 @@ const styles = StyleSheet.create({
 
   },
   tabButton: {
-    width: width * .49,
+    width: width,
     height: height * .07,
     justifyContent: 'center',
     alignItems: 'center',

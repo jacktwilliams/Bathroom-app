@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight, Image, Alert } from 'react-native';
 import * as firebase from 'firebase';
+import consts from '../Utility/Constants';
 
+const addr = consts.addr + "newUser/";
 
 export default class LoginScreen extends Component {
+
+  static navigationOptions = ({ navigation }) => {
+    let headerTitle = (<Text style={styles.HeaderTitle}>Register</Text>);
+    
+    
+    return {headerTitle, headerStyle: {
+        backgroundColor: '#5495ff'
+     }}
+  }
+
   constructor(props) {
     super(props);
     state = {
@@ -12,15 +24,34 @@ export default class LoginScreen extends Component {
       username: ''
     }
   }
+
   onClickListener = (viewId) => {
     Alert.alert("Alert", "Button pressed "+viewId);
   }
 
+  _handleCreatePressed = () => {
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {
+      this.props.navigation.navigate('AppNav');
+      let user = firebase.auth().currentUser;
+      user.getIdToken(true)
+      .then((tok) => {
+        fetch(addr,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              uid: user.uid,
+              uname: user.displayName,
+              token: tok
+            })
+          });
+      });
+    }).catch((error) => {
+      alert(error);
+    });
+  }
+
   render() {
     return (
-
-      
-
       <View style={styles.container}>
 
         <View style={styles.logo}>
@@ -60,23 +91,6 @@ export default class LoginScreen extends Component {
         </TouchableHighlight>
       </View>
     );
-  }
-
-  static navigationOptions = ({ navigation }) => {
-    let headerTitle = (<Text style={styles.HeaderTitle}>Register</Text>);
-    
-    
-    return {headerTitle, headerStyle: {
-        backgroundColor: '#5495ff'
-     }}
-  }
-  _handleCreatePressed = () => {
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-      this.props.navigation.navigate('AppNav');
-    }).catch((error) => {
-      alert(error);
-    });
-
   }
 }
 

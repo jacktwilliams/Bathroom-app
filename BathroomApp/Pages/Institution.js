@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
+import consts from '../Utility/Constants';
 
 
-const serverAddr = "http://192.168.1.3:3000/?institution=Winona%20State%20University";
+const serverAddr = consts.addr + "?institution=Winona%20State%20University";
 const accentColor = "#30405A"
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -109,9 +110,9 @@ export default class Institution extends Component {
         />
 
         <View style={styles.tabContainer}>
-            <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
+            {/* <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
               <Text style={styles.selectedText}>Buildings</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity 
               style={[styles.tabButton, styles.notSelectedButton]}
               onPress={() => {
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
 
   },
   tabButton: {
-    width: width * .49,
+    width: width,
     height: height * .07,
     justifyContent: 'center',
     alignItems: 'center',

@@ -40,51 +40,44 @@ app.get('/', (req, res) => {
           errorHandler(error1);
         }
         else {
-          institutionFullInfo.buildings = results1;  
-          var gotBaths = false;
-          var gotRevs = false;
-          
-          function returnData(dat) {
-            if(gotBaths && gotRevs) {
-              res.status(200).send(dat);
-              console.log("Response sent.");
-            }
+          institutionFullInfo.buildings = results1;
+
+          //for each building add the bathroom data for that building.
+          for (let i = 0; i < results1.length; ++i) {
+            let currentBuild = results1[i];
+            queryString = "select * from bathroom where org_id = " + results[0].org_id +
+              " and build_id = " + currentBuild.build_id + ";";
+            console.log("GO get it for " + currentBuild.build_name);
+            conn.query(queryString, (error2, results2) => {
+              if (error2) {
+                errorHandler(error2, "Issue getting bathrooms for building " + currentBuild.build_id);
+              }
+              else {
+                console.log("Bath data for building " + currentBuild.build_name + "\n" + JSON.stringify(results2));
+                currentBuild.bathrooms = results2;
+              }
+            });
           }
 
           //got building info. Get bathroom info
-          queryString = "select * from bathroom where org_id = " + results[0].org_id + ";";
+          queryString = "select * from bathroom where org_id = " + results[0].org_id +
+            " and build_id in (select build_id from organization where org_id = " + results[0].org_id + ");";
           conn.query(queryString, (error2, results2) => {
             if(error2) {
               errorHandler(error2);
             }
             else {
               institutionFullInfo.allBathrooms = results2;
-              gotBaths = true;
-              returnData(institutionFullInfo);
-            }
-          });
 
-          //also get all reviews
-          queryString = "select * from review where org_id = " + results[0].org_id + ";";
-          conn.query(queryString, (error2, results2) => {
-            if (error2) {
-              errorHandler(error2);
-            }
-            else {
-              institutionFullInfo.allReviews = results2;
-              gotRevs = true;
-              returnData(institutionFullInfo);
+              //respond to request with all data
+              console.log("Full info\n" + JSON.stringify(institutionFullInfo));
+              res.status(200).send(institutionFullInfo);
             }
           });
         }
       });
     }
   });
-});
-
-app.post("/newUser", (req, res) => {
-  console.log("req " + req);
-  console.log("reqjson" + JSON.stringify(req));
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));
