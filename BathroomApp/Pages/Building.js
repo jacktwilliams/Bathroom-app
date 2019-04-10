@@ -31,20 +31,24 @@ export default class Building extends Component {
     //here we will want to parse the reviews into the corresponding bathrooms.
     //we will also give the bathrooms a title here.
     this.moveReviewsIntoBathrooms();
+    console.log("OUR STATE BUILDINGS: " + JSON.stringify(this.state));
   }
 
   moveReviewsIntoBathrooms() {
     let bathrooms = this.state.bathrooms;
     let reviews = this.state.reviews;
-    console.log("Reviews\n" + JSON.stringify(reviews));
+
     for (let i = 0; i < bathrooms.length; ++i) {
       bathrooms[i].title = this.state.buildingData.build_name + " " + bathrooms[i].floor_num + bathrooms[i].gender
       bathrooms[i].reviews = [];
     }
     for (let i = 0; i < reviews.length; ++i) {
       let currentRev = reviews[i];
-      for (let x = 0; x < bathrooms.length; ++i) {
+      console.log(JSON.stringify(currentRev));
+      for (let x = 0; x < bathrooms.length; ++x) {
+        console.log("Bathroom check: " + JSON.stringify(bathrooms[x]))
         if(currentRev.bath_id === bathrooms[x].bath_id) {
+          console.log("Correct bathroom.");
           bathrooms[x].reviews.push(currentRev);
         }
       }

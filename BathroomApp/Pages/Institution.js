@@ -38,6 +38,8 @@ export default class Institution extends Component {
     let buildings = this.state.buildings;
     let bathrooms = this.state.bathrooms;
     let reviews = this.state.reviews;
+
+    console.log("Reviews in inst page: " + JSON.stringify(reviews) + "\n\n\n");
     
     for(let i = 0; i < buildings.length; ++i) {
       buildings[i].bathrooms = [];
