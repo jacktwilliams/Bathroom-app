@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
 import consts from '../Utility/Constants';
+import ReviewsButton from '../Components/ReviewsButton';
+import StarRating from 'react-native-star-rating';
 
 
 const serverAddr = consts.addr + "?institution=Winona%20State%20University";
-import StarRating from 'react-native-star-rating';
-const accentColor = "#5495ff";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -14,7 +14,7 @@ export default class Institution extends Component {
  static navigationOptions = {
    title: 'Winona State University',
    headerStyle: {
-    backgroundColor: accentColor
+    backgroundColor: consts.accentColor,
   }
  }
 
@@ -32,14 +32,14 @@ export default class Institution extends Component {
     this.getInstitutionData();
   }
 
-  //puts each bathroom as a json property of the correct building
+  /*
+    Parses JSON received from server query. Each building will have a list with its bathrooms and reviews.
+    In Building we will put the reviews into the corresponding bathrooms.
+  */
   moveBathroomsAndReviewsIntoBuildings() {
-    //initialize each building with an empty bathroom list and empty review list
     let buildings = this.state.buildings;
     let bathrooms = this.state.bathrooms;
     let reviews = this.state.reviews;
-
-    console.log("Reviews in inst page: " + JSON.stringify(reviews) + "\n\n\n");
     
     for(let i = 0; i < buildings.length; ++i) {
       buildings[i].bathrooms = [];
@@ -63,17 +63,14 @@ export default class Institution extends Component {
         }
       }
     }
-    console.log(JSON.stringify(buildings));
   }
 
   getInstitutionData() {
-    console.log(serverAddr);
     fetch(serverAddr)
     .then((res) => {
       return res.json();
     })
     .then((resJson) => {
-      console.log(resJson.buildings);
       this.setState({
         institutionData: resJson,
         buildings: resJson.buildings,
@@ -85,7 +82,7 @@ export default class Institution extends Component {
       console.log("Recieved institution data and parsed reviews and bathrooms into the correct buildings.");
     })
     .catch((error) => {
-      console.log("Error getting institution data from server\n" + error);
+      console.log("Error getting institution data from server (or error parsing json)\n" + error);
     });
   }
   
@@ -103,7 +100,7 @@ export default class Institution extends Component {
               return (
                 <TouchableOpacity 
                   onPress={() => {
-                    console.log("Sending item: " + JSON.stringify(item.item));
+                    console.log("Sending building data to building page: " + JSON.stringify(item.item));
                     this.props.navigation.navigate("Building", {buildingData: item.item});
                 }}>
                 <View style={styles.border}>
@@ -113,22 +110,7 @@ export default class Institution extends Component {
               );
             }}
         />
-
-        <View style={styles.tabContainer}>
-            {/* <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
-              <Text style={styles.selectedText}>Buildings</Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity 
-              style={[styles.tabButton, styles.notSelectedButton]}
-              onPress={() => {
-                console.log(JSON.stringify(this.props.navigation));
-                this.props.navigation.navigate("ReviewList", {dataHolder: this.state.institutionData});
-              }}  
-            >
-              <Text style={styles.notSelectedText}>All Reviews</Text>
-            </TouchableOpacity>
-        </View>
-
+        <ReviewsButton dataHolder={this.state.institutionData} />
       </View>
     );
   }
@@ -148,32 +130,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 30,
     fontSize: 20,
-  },
-  tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: accentColor,
-    height: height * .07,
-  },
-  selectedButton: {
-    borderRightWidth: 2,
-    borderRightColor: 'black',
-  },
-  notSelectedButton: {
-
-  },
-  selectedText: {
-    fontSize: 18
-  },
-  notSelectedText: {
-    fontSize: 18
-  },
-  tabButton: {
-    width: width,
-    height: height * .07,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buildingNameStyling: {
     marginLeft: 18,

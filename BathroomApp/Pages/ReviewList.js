@@ -29,7 +29,6 @@ export default class ReviewList extends Component {
 };
 
   constructor(props) {
-    console.log("made it to review list.");
     super(props);
     let dataHolder = this.props.navigation.getParam("dataHolder", null);
     let revList;
@@ -45,9 +44,6 @@ export default class ReviewList extends Component {
       renderList: false, //flip this boolean to re-render flatlist
     };
 
-    console.log("Our bathrooms:\n" + this.state.bathrooms);
-    
-    //here we will want to parse the reviews into the corresponding bathrooms.
   }
 
   render() {
@@ -70,15 +66,6 @@ export default class ReviewList extends Component {
               );
             }}
         />
-
-        <View style={styles.tabContainer}>
-            <TouchableOpacity style={[styles.tabButton, styles.notselectedButton]}>
-              <Text style={styles.notSelectedText}>Buildings</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
-              <Text style={styles.selectedText}>All Reviews</Text>
-            </TouchableOpacity>
-        </View>
       </View>
     );
   }

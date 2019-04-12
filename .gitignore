@@ -1,3 +1,4 @@
 */node_modules*
 Server/password.js
-BathroomApp/package.json
+*/package-lock.json
+BathroomApp/Pages/institution.js

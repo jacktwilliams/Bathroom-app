@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
+import consts from '../Utility/Constants';
 
 
-const accentColor = "#5495ff"
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -12,7 +12,7 @@ export default class Building extends Component {
   return {
     title: navigation.getParam('buildingData', null).build_name,
     headerStyle: {
-      backgroundColor: accentColor
+      backgroundColor: consts.accentColor,
     }
   };
 };
@@ -31,7 +31,6 @@ export default class Building extends Component {
     //here we will want to parse the reviews into the corresponding bathrooms.
     //we will also give the bathrooms a title here.
     this.moveReviewsIntoBathrooms();
-    console.log("OUR STATE BUILDINGS: " + JSON.stringify(this.state));
   }
 
   moveReviewsIntoBathrooms() {
@@ -39,21 +38,17 @@ export default class Building extends Component {
     let reviews = this.state.reviews;
 
     for (let i = 0; i < bathrooms.length; ++i) {
-      bathrooms[i].title = this.state.buildingData.build_name + " " + bathrooms[i].floor_num + bathrooms[i].gender
+      bathrooms[i].title = this.state.buildingData.build_name + " " + bathrooms[i].floor_num + bathrooms[i].gender; 
       bathrooms[i].reviews = [];
     }
     for (let i = 0; i < reviews.length; ++i) {
       let currentRev = reviews[i];
-      console.log(JSON.stringify(currentRev));
       for (let x = 0; x < bathrooms.length; ++x) {
-        console.log("Bathroom check: " + JSON.stringify(bathrooms[x]))
         if(currentRev.bath_id === bathrooms[x].bath_id) {
-          console.log("Correct bathroom.");
           bathrooms[x].reviews.push(currentRev);
         }
       }
     }
-    console.log("Bathrooms: \n\n" + JSON.stringify(this.state.bathrooms));
   }
 
   render() {
@@ -67,7 +62,6 @@ export default class Building extends Component {
               return item.bath_id.toString()
             }}
             renderItem={(item) => {
-              console.log(JSON.stringify(item));
               return (
                 <View style={styles.border}>
                   <TouchableOpacity
@@ -82,19 +76,7 @@ export default class Building extends Component {
             }}
         />
 
-        <View style={styles.tabContainer}>
-            {/* <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
-              <Text style={styles.selectedText}>Buildings</Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity 
-              style={[styles.tabButton, styles.notSelectedButton]}
-              onPress={() => {
-                this.props.navigation.navigate("ReviewList", {dataHolder: this.state.buildingData});
-              }}  
-            >
-              <Text style={styles.notSelectedText}>All Reviews</Text>
-            </TouchableOpacity>
-        </View>
+        <ReviewButton dataHolder={this.state.buildingData} />
       </View>
     );
   }
@@ -115,32 +97,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 30,
     fontSize: 20,
-  },
-  tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: accentColor,
-    height: height * .07,
-  },
-  selectedButton: {
-    borderRightWidth: 2,
-    borderRightColor: 'black',
-  },
-  notSelectedButton: {
-
-  },
-  selectedText: {
-    fontSize: 18
-  },
-  notSelectedText: {
-    fontSize: 18
-  },
-  tabButton: {
-    width: width,
-    height: height * .07,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buildingNameStyling: {
     marginLeft: 15,
