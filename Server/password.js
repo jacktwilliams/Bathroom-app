@@ -1,3 +1,3 @@
 module.exports = {
-  password: "CCrun123",
+  password: "",
 }
