@@ -9,7 +9,7 @@ const AuthNav = createStackNavigator({
    SignupScreen: SignupScreen
   },
   {
-    initialRouteName: "LoginScreen"
+    initialRouteName: "SignupScreen"
   });
   
   export default AuthNav;

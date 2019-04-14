@@ -82,4 +82,9 @@ app.get('/', (req, res) => {
   });
 });
 
+app.post("/newUser", (req, res) => {
+  console.log("req " + req);
+  console.log("reqjson" + JSON.stringify(req));
+});
+
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
 
-const accentColor = "#30405A"
+const accentColor = "#5495ff"
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -17,7 +17,9 @@ export default class ReviewList extends Component {
   else if (dataHolder.bathrooms) { //came here from buildings page
     title = dataHolder.build_name + " Reviews";
   }
-  //else if we came from bathroom page once it is created.
+  else {
+    title = dataHolder.title + " Reviews";
+  }
   return {
     title: title,
     headerStyle: {
@@ -27,26 +29,21 @@ export default class ReviewList extends Component {
 };
 
   constructor(props) {
-    console.log("made it to review list.");
     super(props);
     let dataHolder = this.props.navigation.getParam("dataHolder", null);
     let revList;
     if (dataHolder.buildings) { //came here from institution page
       revList = dataHolder.allReviews;
     }
-    else if (dataHolder.bathrooms) { //came here from buildings page
+    else { //came here from buildings or bathrooms page
       revList = dataHolder.reviews;
     }
-    //else if we came from bathroom page once it is created.
 
     this.state = {
       reviews: revList,
       renderList: false, //flip this boolean to re-render flatlist
     };
 
-    console.log("Our bathrooms:\n" + this.state.bathrooms);
-    
-    //here we will want to parse the reviews into the corresponding bathrooms.
   }
 
   render() {
@@ -63,19 +60,12 @@ export default class ReviewList extends Component {
               item = item.item;
               console.log(JSON.stringify(item));
               return (
-                <Text>{item.review_text}</Text>
+                <View style={styles.border}>
+                    <Text style={styles.buildingNameStyling}>{item.review_text}</Text>
+                </View>
               );
             }}
         />
-
-        <View style={styles.tabContainer}>
-            <TouchableOpacity style={[styles.tabButton, styles.notselectedButton]}>
-              <Text style={styles.notSelectedText}>Buildings</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.tabButton, styles.selectedButton]}>
-              <Text style={styles.selectedText}>All Reviews</Text>
-            </TouchableOpacity>
-        </View>
       </View>
     );
   }
@@ -122,5 +112,19 @@ const styles = StyleSheet.create({
     height: height * .07,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buildingNameStyling: {
+    marginLeft: 18,
+    marginTop: 20,
+    marginBottom: 30,
+    fontSize: 20
+  },
+  border: {
+    borderBottomColor: "#30405A",
+    borderBottomWidth: .2,
+    marginLeft: 10,
+    marginRight: 10,
+    flex: 1, 
+    flexDirection: 'row'
   }
 });
