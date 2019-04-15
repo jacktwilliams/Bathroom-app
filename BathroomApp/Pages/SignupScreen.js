@@ -38,6 +38,10 @@ export default class LoginScreen extends Component {
         fetch(addr,
           {
             method: "POST",
+            headers: {
+              'Accept':'application/json',
+              'Content-Type':'application/json',
+            },
             body: JSON.stringify({
               uid: user.uid,
               uname: user.displayName,

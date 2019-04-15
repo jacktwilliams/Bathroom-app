@@ -3,6 +3,9 @@ const app = express();
 const port = 3000;
 var mysql = require('mysql');
 var passw = require('./password.js');
+var bodyParser = require("body-parser");
+
+app.use(express.json());
 
 var conn = mysql.createConnection({
     host : 'localhost',
@@ -83,8 +86,8 @@ app.get('/', (req, res) => {
 });
 
 app.post("/newUser", (req, res) => {
-  console.log("req " + req);
-  console.log("reqjson" + JSON.stringify(req));
+  console.log("req " + JSON.stringify(req.body));
+  
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));
