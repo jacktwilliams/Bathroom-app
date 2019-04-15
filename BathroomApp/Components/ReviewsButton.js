@@ -31,7 +31,7 @@ const height = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   tabContainer: {
-    backgroundColor: accentColor,
+    backgroundColor: consts.accentColor,
     height: height * .07,
   },
   buttonText: {

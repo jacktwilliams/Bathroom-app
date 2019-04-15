@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
 import Institution from '../Pages/Institution';
+import Home from '../Pages/Home'
 import Building from '../Pages/Building';
 import ReviewList from '../Pages/ReviewList';
 
@@ -8,9 +9,10 @@ const AppNav = createStackNavigator({
   Institution: Institution,
   Building: Building,
   ReviewList: ReviewList,
+  Home: Home
 },
 {
-  initialRouteName: "Institution"
+  initialRouteName: "Home"
 });
   
 export default AppNav;
