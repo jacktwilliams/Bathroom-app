@@ -3,9 +3,9 @@ CREATE DATABASE bathroom;
 USE bathroom;
 
 CREATE TABLE user (
-	user_id BIGINT UNSIGNED NOT NULL,
+	user_id SERIAL NOT NULL,
+	fire_id TINYTEXT NOT NULL,
     user_name VARCHAR(64),
-    user_email VARCHAR(64),
     PRIMARY KEY(user_id)
 );
 

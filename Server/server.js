@@ -15,7 +15,6 @@ var conn = mysql.createConnection({
 });
 
 var admin = require('firebase-admin');
-
 var serviceAccount = require('./bathroomapp-5daa4-firebase-adminsdk-lswkz-0c46f33157.json');
 
 admin.initializeApp({
@@ -96,8 +95,25 @@ app.get('/', (req, res) => {
 });
 
 app.post("/newUser", (req, res) => {
-  console.log("req " + JSON.stringify(req.body));
-  
+  console.log("New user post.");
+
+  admin.auth().verifyIdToken(req.body.token)
+  .then((decodedToken) => {
+    let queryString = "insert into user(fire_id, user_name) VALUE ('" + 
+      req.body.uid + "', " + req.body.uname + ");";
+    
+    conn.query(queryString, (err, res) => {
+      if(err) {
+        console.log("Error adding user to DB.\n" + err);
+      }
+      else {
+        console.log("Successfully added user to DB.");
+      }
+    });
+  })
+  .catch((e) => {
+    console.log("Error authenticating user with firebase.\n" + e);
+  })
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

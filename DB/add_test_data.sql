@@ -7,9 +7,10 @@ INSERT INTO userinfo(user_id, user_name, user_email) VALUES
 
 /* I haven't used SQL in years; hopefully this is helpful */
 
-INSERT INTO user(user_id, user_name, user_email) VALUES
-	(1, "kgulden", "kgulden14@winona.edu"),
-    (2, "smcvicker", "smcvicker14@winona.edu");
+
+INSERT INTO user(fire_id, user_name) VALUES
+	('1', "kgulden"),
+    ('2', "smcvicker");
 
 INSERT INTO organization(org_name, org_city, org_state, org_country, latitude, longitude) VALUES
 	("Winona State University", "Winona", "Minnesota", "United States of America", 44.0492869, -91.7357308),
