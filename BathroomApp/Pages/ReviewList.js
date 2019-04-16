@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
+import consts from '../Utility/Constants';
 
-const accentColor = "#5495ff"
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -23,7 +23,7 @@ export default class ReviewList extends Component {
   return {
     title: title,
     headerStyle: {
-      backgroundColor: accentColor
+      backgroundColor: consts.accentColor
     }
   };
 };
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: accentColor,
+    backgroundColor: consts.accentColor,
     height: height * .07,
   },
   selectedButton: {

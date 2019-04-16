@@ -3,6 +3,9 @@ const app = express();
 const port = 3000;
 var mysql = require('mysql');
 var passw = require('./password.js');
+var bodyParser = require("body-parser");
+
+app.use(express.json());
 
 var conn = mysql.createConnection({
     host : 'localhost',
@@ -10,6 +13,15 @@ var conn = mysql.createConnection({
     password : passw.password,
     database : 'bathroom'
 });
+
+var admin = require('firebase-admin');
+var serviceAccount = require('./bathroomapp-5daa4-firebase-adminsdk-lswkz-0c46f33157.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://bathroomapp-5daa4.firebaseio.com"
+});
+
 
 conn.connect();
 
@@ -83,8 +95,25 @@ app.get('/', (req, res) => {
 });
 
 app.post("/newUser", (req, res) => {
-  console.log("req " + req);
-  console.log("reqjson" + JSON.stringify(req));
+  console.log("New user post.");
+
+  admin.auth().verifyIdToken(req.body.token)
+  .then((decodedToken) => {
+    let queryString = "insert into user(fire_id, user_name) VALUE ('" + 
+      req.body.uid + "', " + req.body.uname + ");";
+    
+    conn.query(queryString, (err, res) => {
+      if(err) {
+        console.log("Error adding user to DB.\n" + err);
+      }
+      else {
+        console.log("Successfully added user to DB.");
+      }
+    });
+  })
+  .catch((e) => {
+    console.log("Error authenticating user with firebase.\n" + e);
+  })
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));
