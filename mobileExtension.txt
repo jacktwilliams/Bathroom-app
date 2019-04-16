@@ -1,0 +1,6 @@
+Props needed:
+      list of stuff to render,
+      style props (research)
+      list of things to send to review page (all reviews for org or for building)
+      a navigation fun
+      (mmm maybe this isn't even a good idea ??)
