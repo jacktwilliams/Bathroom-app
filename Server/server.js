@@ -108,12 +108,29 @@ app.post("/newUser", (req, res) => {
       }
       else {
         console.log("Successfully added user to DB.");
+        res.status(200).send();
       }
     });
   })
   .catch((e) => {
     console.log("Error authenticating user with firebase.\n" + e);
   })
+});
+
+app.get("/search", (req, res) => {
+  console.log("Search request for " + req.query.query);
+  
+  let queryString = "select org_name from organization where org_name like '%" + req.query.query + "%';";
+
+  conn.query(queryString, (err, result) => {
+    if (err) {
+      console.log("Error querying DB.\n" + err);
+    }
+    else {
+      console.log("Matching entries: \n" + res);
+      res.status(200).send(result);
+    }
+  });
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));
