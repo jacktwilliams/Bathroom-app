@@ -11,21 +11,23 @@ CREATE TABLE user (
 
 CREATE TABLE organization(
     org_id SERIAL NOT NULL,
-    org_name VARCHAR(64) NOT NULL,
-    org_city VARCHAR(64) NOT NULL,
-    org_state VARCHAR(64) NOT NULL,
-    org_country VARCHAR(64) NOT NULL,
-    latitude DECIMAL(10,7),
-    longitude DECIMAL(10,7),
+    org_name VARCHAR(255) NOT NULL,
+    org_city VARCHAR(255) NOT NULL,
+    org_state VARCHAR(255) NOT NULL,
+    org_country VARCHAR(255) NOT NULL,
+    latitude DECIMAL(16,13),
+    longitude DECIMAL(16,13),
     PRIMARY KEY (org_id)
 );
 
 CREATE TABLE building (
     org_id BIGINT UNSIGNED NOT NULL,
 	build_id TINYINT UNSIGNED AUTO_INCREMENT NOT NULL,
-    build_name varchar(64) NOT NULL,
+    build_name varchar(255) NOT NULL,
+    /*
     latitude DECIMAL(10,7),
     longitude DECIMAL(10,7),
+    */
     PRIMARY KEY(build_id, org_id),
     FOREIGN KEY (org_id)
 		REFERENCES organization(org_id)
