@@ -3,14 +3,16 @@ import { createStackNavigator } from 'react-navigation';
 import Institution from '../Pages/Institution';
 import Building from '../Pages/Building';
 import ReviewList from '../Pages/ReviewList';
+import Home from '../Pages/Home';
 
 const AppNav = createStackNavigator({
   Institution: Institution,
   Building: Building,
   ReviewList: ReviewList,
+  Home: Home,
 },
 {
-  initialRouteName: "Institution"
+  initialRouteName: "Home"
 });
   
 export default AppNav;
