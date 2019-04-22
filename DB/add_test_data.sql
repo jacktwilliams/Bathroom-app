@@ -7,45 +7,46 @@ INSERT INTO userinfo(user_id, user_name, user_email) VALUES
 
 /* I haven't used SQL in years; hopefully this is helpful */
 
-INSERT INTO user(user_id, user_name, user_email) VALUES
-	(1, "kgulden", "kgulden14@winona.edu"),
-    (2, "smcvicker", "smcvicker14@winona.edu");
+
+INSERT INTO user(fire_id, user_name) VALUES
+	('1', "kgulden"),
+    ('2', "smcvicker");
 
 INSERT INTO organization(org_name, org_city, org_state, org_country, latitude, longitude) VALUES
 	("Winona State University", "Winona", "Minnesota", "United States of America", 44.0492869, -91.7357308),
 	("Saint Mary's University", "Winona", "Minnesota", "United States of America", 44.04478, -91.6981098),
 	("Minnesota State College Southeast - Winona Campus", "Winona", "Minnesota", "United States of America", 44.0245836, -91.6209096);
 
-INSERT INTO building(org_id, build_name, latitude, longitude) VALUES
-	(1, "Somsen Hall", 44.0477437, -91.6442243),
-	(1, "Stark Hall", 44.0473347, -91.643937),
-	(1, "Watkins Hall", 44.0482327, -91.6443067),
-    (1, "Richards Hall", null, null), /* No exact locaiton is available, so null, default to organization.latitude/organization.longitude */
-	(1, "Conway Hall", null, null),
-	(1, "Shepard Hall", null, null),
-	(1, "Morey Hall", null, null),
-	(1, "Lucas Hall", null, null),
-	(1, "Prentiss Hall", null, null),
-	(1, "Sheehan Hall", null, null),
-	(1, "New Center West", null, null),
-	(1, "Kirkland Hall", null, null),
-	(1, "Science Laboratory Center", null, null),
-	(1, "Pasteur Hall", null, null),
-	(1, "Gildemeister Hall", null, null),
-	(1, "Minné Hall", null, null),
-	(1, "Phelps Hall", null, null),
-	(1, "Maxwell Hall", null, null),
-	(1, "Performing Arts Center", null, null),
-	(1, "Darrell W Krueger Library", null, null),
-	(1, "Integrated Wellness Complex", null, null),
-	(1, "Memorial Hall", null, null),
-	(1, "Alumni House", null, null),
-	(1, "Facilities Services", null, null),
-	(1, "Utility Plant", null, null),
-	(1, "Verizon Stadium", null, null),
-	(1, "Wabasha Recreation Center", null, null),
-	(1, "Sustainability House", null, null),
-    (1, "Baldwin Hall", null, null);
+INSERT INTO building(org_id, build_name) VALUES
+	(1, "Somsen Hall"),
+	(1, "Stark Hall"),
+	(1, "Watkins Hall"),
+    (1, "Richards Hall"), /* No exact locaiton is available, so null, default to organization.latitude/organization.longitude */
+	(1, "Conway Hall"),
+	(1, "Shepard Hall"),
+	(1, "Morey Hall"),
+	(1, "Lucas Hall"),
+	(1, "Prentiss Hall"),
+	(1, "Sheehan Hall"),
+	(1, "New Center West"),
+	(1, "Kirkland Hall"),
+	(1, "Science Laboratory Center"),
+	(1, "Pasteur Hall"),
+	(1, "Gildemeister Hall"),
+	(1, "Minné Hall"),
+	(1, "Phelps Hall"),
+	(1, "Maxwell Hall"),
+	(1, "Performing Arts Center"),
+	(1, "Darrell W Krueger Library"),
+	(1, "Integrated Wellness Complex"),
+	(1, "Memorial Hall"),
+	(1, "Alumni House"),
+	(1, "Facilities Services"),
+	(1, "Utility Plant"),
+	(1, "Verizon Stadium"),
+	(1, "Wabasha Recreation Center"),
+	(1, "Sustainability House"),
+    (1, "Baldwin Hall");
 	
 INSERT INTO bathroom(org_id, build_id, room_num, floor_num, loc_desc, change_station, multi_person, gender) VALUES
 	(1, 1, null, 1, "Near the Systems Admin office", 1, 1, "O"),
