@@ -8,7 +8,7 @@ import { SearchBar } from 'react-native-elements';
 
 
 
-const serverAddr = consts.addr  + "?institution=Winona%20State%20University";
+const serverAddr = consts.addr;
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -30,6 +30,7 @@ export default class Institution extends Component {
 
   updateSearch = search => {
     this.setState({ search });
+    console.log(search);
   };
 
 
@@ -54,49 +55,21 @@ export default class Institution extends Component {
     Parses JSON received from server query. Each building will have a list with its bathrooms and reviews.
     In Building we will put the reviews into the corresponding bathrooms.
   */
-  moveBathroomsAndReviewsIntoBuildings() {
-    let buildings = this.state.buildings;
-    let bathrooms = this.state.bathrooms;
-    let reviews = this.state.reviews;
     
-    for(let i = 0; i < buildings.length; ++i) {
-      buildings[i].bathrooms = [];
-      buildings[i].reviews = [];
-    }
-
-    for(let i = 0; i < bathrooms.length; ++i) {
-      let currentBathroom = bathrooms[i];
-      for(let x = 0; x < buildings.length; ++x) {
-        if(buildings[x].build_id === currentBathroom.build_id) {
-          buildings[x].bathrooms.push(currentBathroom);
-        }
-      } 
-    }
-
-    for(let i = 0; i < reviews.length; ++i) {
-      let currentReview = reviews[i];
-      for(let x = 0; x < buildings.length; ++x) {
-        if(buildings[x].build_id === currentReview.build_id) {
-          buildings[x].reviews.push(currentReview);
-        }
-      }
-    }
-  }
-
   getInstitutionData() {
-    fetch(serverAddr)
+    fetch(serverAddr + "search/?query=")
     .then((res) => {
       return res.json();
     })
     .then((resJson) => {
       this.setState({
         institutionData: resJson,
-        buildings: resJson.buildings,
-        bathrooms: resJson.allBathrooms,
-        reviews: resJson.allReviews,
-        renderList: !this.state.renderList,
+         institution: resJson.org_name,
+         buildings: resJson.buildings,
+        // bathrooms: resJson.allBathrooms,
+        // reviews: resJson.allReviews,
+        // renderList: !this.state.renderList,
       });
-      this.moveBathroomsAndReviewsIntoBuildings();
       console.log("Recieved institution data and parsed reviews and bathrooms into the correct buildings.");
     })
     .catch((error) => {
@@ -119,8 +92,8 @@ export default class Institution extends Component {
     placeholder="Search for an Institution..."
     onChangeText={this.updateSearch}
     value={search}
+    
   />
-
         <FlatList 
             data={this.state.buildings}
             extraData={this.state.renderList}
