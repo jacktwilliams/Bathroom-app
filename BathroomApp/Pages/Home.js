@@ -8,7 +8,7 @@ import { SearchBar } from 'react-native-elements';
 
 
 
-const serverAddr = consts.addr;
+const serverAddr = consts.addr  + "?institution=Winona%20State%20University";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
