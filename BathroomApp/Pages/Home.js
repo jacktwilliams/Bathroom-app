@@ -11,6 +11,7 @@ import { SearchBar } from 'react-native-elements';
 const serverAddr = consts.addr;
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+var search = '';
 
 
 
@@ -42,8 +43,10 @@ export default class Institution extends Component {
 
     this.state = {
       institutionData: null,
+      resultList: [],
       buildings: [],
       bathrooms: null,
+      extraData: true,
       reviews: null,
       renderList: false, //flip this boolean to re-render flatlist
     };
@@ -57,18 +60,17 @@ export default class Institution extends Component {
   */
     
   getInstitutionData() {
-    fetch(serverAddr + "search/?query=")
+    fetch(serverAddr + "search/?query=" + search)
     .then((res) => {
       return res.json();
     })
     .then((resJson) => {
+      console.log(JSON.stringify(resJson));
       this.setState({
-        institutionData: resJson,
-         institution: resJson.org_name,
-         buildings: resJson.buildings,
-        // bathrooms: resJson.allBathrooms,
-        // reviews: resJson.allReviews,
-        // renderList: !this.state.renderList,
+        
+        resultList: resJson,
+     
+        extraData: !this.state.extraData,
       });
       console.log("Recieved institution data and parsed reviews and bathrooms into the correct buildings.");
     })
@@ -95,26 +97,25 @@ export default class Institution extends Component {
     
   />
         <FlatList 
-            data={this.state.buildings}
+            data={this.state.resultList}
             extraData={this.state.renderList}
             keyExtractor={(item, index) => {
-              return item.build_id.toString()
+              return index
             }}
             renderItem={(item) => {
               return (
                 <TouchableOpacity 
                   onPress={() => {
-                    console.log("Sending building data to building page: " + JSON.stringify(item.item));
-                    this.props.navigation.navigate("Building", {buildingData: item.item});
+                    // console.log("Sending building data to building page: " + JSON.stringify(item.item));
+                    // this.props.navigation.navigate("Building", {renderList: item.item});
                 }}>
                 <View style={styles.border}>
-                  <Text style={styles.buildingNameStyling}>{item.item.build_name}</Text>
+                  <Text style={styles.buildingNameStyling}>{item.item.org_name}</Text>
                 </View>
                 </TouchableOpacity>
               );
             }}
         />
-        <ReviewsButton dataHolder={this.state.institutionData} />
       </View>
     );
   }
