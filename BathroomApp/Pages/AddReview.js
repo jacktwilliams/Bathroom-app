@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {autoCapitalize, Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions, TextInput} from 'react-native';
 import consts from '../Utility/Constants';
 import StarRating from 'react-native-star-rating';
+// import console = require('console');
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -26,19 +27,20 @@ export default class AddReview extends Component {
 
   constructor(props) {
     super(props);
+    // this.toggle = this.toggle.bind(this);
     let dataHolder = this.props.navigation.getParam("dataHolder", null);
     let revList;
-    // if (dataHolder.buildings) { //came here from institution page
-    //   revList = dataHolder.allReviews;
-    // }
-    // else { //came here from buildings or bathrooms page
-    //   revList = dataHolder.reviews;
-    // }
+    let cleanliness;
+    let stocked;
+    let quiet;
+    let review;
 
     this.state = {
-      reviews: revList,
-      renderList: false, //flip this boolean to re-render flatlist
+      cleanliness: false,
+      stocked: false,
+      quiet: false,
       starCount: 3,
+      review: ""
     };
   }
 
@@ -48,18 +50,32 @@ export default class AddReview extends Component {
     });
   }
 
+  postClick(){
+    console.log(this.state);
+  }
+
+  setClean() {
+    console.log(this.state.cleanliness);
+  }
+  setStocked() {
+    console.log(this.state.stocked);
+  }
+  setQuiet() {
+    console.log(this.state.quiet);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.reviewbuttons}>
             <View style={styles.reviewbuttonscontainers}>
-                <Button color="white" title="Clean"></Button>
+                <Button color="white" title="Clean" onPress={() => {this.setClean()}}></Button>
             </View>
             <View style={styles.reviewbuttonscontainers}>
-                <Button color="white" title="Stocked"></Button>
+                <Button color="white" title="Stocked" onPress={() => {this.setStocked()}}></Button>
             </View>
             <View style={styles.reviewbuttonscontainers}>
-                <Button color="white" title="Quiet"></Button>
+                <Button color="white" title="Quiet" onPress={() => {this.setQuiet()}}></Button>
             </View>
         </View>
 
@@ -78,13 +94,14 @@ export default class AddReview extends Component {
             autoCapitalize={autoCapitalize}
             multiline={true}
             keyboardType={"default"}
-            onChangeText={(text) => this.setState({text})}
+            onChangeText={(text) => this.setState({review: text})}
             value={this.state.text}
             />
         </View>    
         <View style={styles.postcontainer}>
             <View style={styles.buttonstyling}>
                 <Button 
+                onPress={() => {this.postClick()}}
                 color="white" 
                 title="Post"
                 />

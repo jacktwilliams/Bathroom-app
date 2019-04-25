@@ -5,6 +5,7 @@ import consts from '../Utility/Constants';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
+
 export default class ReviewList extends Component {
 
  static navigationOptions = ({ navigation }) => {
@@ -70,7 +71,6 @@ export default class ReviewList extends Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
