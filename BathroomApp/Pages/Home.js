@@ -105,7 +105,7 @@ export default class Institution extends Component {
                 <TouchableOpacity 
                   onPress={() => {
                     // console.log("Sending building data to building page: " + JSON.stringify(item.item));
-                    // this.props.navigation.navigate("Building", {renderList: item.item});
+                     this.props.navigation.navigate("Institution", {renderList: item.item});
                 }}>
                 <View style={styles.border}>
                   <Text style={styles.buildingNameStyling}>{item.item.org_name}</Text>
