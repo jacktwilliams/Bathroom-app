@@ -37,6 +37,7 @@ export default class Institution extends Component {
     In Building we will put the reviews into the corresponding bathrooms.
   */
   moveBathroomsAndReviewsIntoBuildings() {
+    
     let buildings = this.state.buildings;
     let bathrooms = this.state.bathrooms;
     let reviews = this.state.reviews;

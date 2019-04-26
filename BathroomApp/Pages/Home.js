@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions,TextInput} from 'react-native';
 import consts from '../Utility/Constants';
 import ReviewsButton from '../Components/ReviewsButton';
-import StarRating from 'react-native-star-rating';
-import { SearchBar } from 'react-native-elements';
-
-
+// import { SearchBar } from 'react-native-elements';
 
 
 const serverAddr = consts.addr;
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-var search = '';
-
 
 
 export default class Institution extends Component {
@@ -23,23 +18,11 @@ export default class Institution extends Component {
     backgroundColor: consts.accentColor,
   }
  }
-
-
- state = {
-    search: '',
-  };
-
-  updateSearch = search => {
-    this.setState({ search });
-    console.log(search);
-  };
-
-
-
  
 
   constructor(props) {
     super(props);
+    let searchinput;
 
     this.state = {
       institutionData: null,
@@ -49,9 +32,10 @@ export default class Institution extends Component {
       extraData: true,
       reviews: null,
       renderList: false, //flip this boolean to re-render flatlist
+      searchinput: ""
     };
 
-    this.getInstitutionData();
+    // this.getInstitutionData();
   }
 
   /*
@@ -60,7 +44,8 @@ export default class Institution extends Component {
   */
     
   getInstitutionData() {
-    fetch(serverAddr + "search/?query=" + search)
+    console.log(this.state.searchinput);
+    fetch(serverAddr + "search/?query=" + this.state.searchinput)
     .then((res) => {
       return res.json();
     })
@@ -78,24 +63,37 @@ export default class Institution extends Component {
       console.log("Error getting institution data from server (or error parsing json)\n" + error);
     });
   }
+
+
+  handleSearch() {
+    console.log(this.state.searchinput);
+  }
   
   render() {
-    const { search } = this.state;
+    // const { searchinput } = this.state;
     return (
-
-        
-
 
       <View style={styles.container}>
 
-
-          
-  <SearchBar
+      <Button 
+      title="Search" 
+      onPress={() => {this.getInstitutionData()}} 
+      />
+           
+ {/* <SearchBar
     placeholder="Search for an Institution..."
-    onChangeText={this.updateSearch}
-    value={search}
-    
-  />
+    // onChangeText={(text) => this.setState({searchinput:text})}
+    // value={searchinput}
+  />  */}
+
+<TextInput
+  style={styles.searchbar}
+  placeholder="Search"
+  keyboardType={"default"}
+  value={this.state.text}
+  onChangeText={(text) => this.setState({searchinput: text})}
+/> 
+
         <FlatList 
             data={this.state.resultList}
             extraData={this.state.renderList}
@@ -119,7 +117,6 @@ export default class Institution extends Component {
       </View>
     );
   }
-  
 }
 
 const styles = StyleSheet.create({
@@ -154,5 +151,11 @@ const styles = StyleSheet.create({
   stars: {
     marginLeft: 'auto',
     marginTop: 15
+  },
+  searchbar: {
+    fontSize: 20,
+    height: 45,
+    backgroundColor: '#e2e2e2',
+    paddingLeft: 10
   }
 });
