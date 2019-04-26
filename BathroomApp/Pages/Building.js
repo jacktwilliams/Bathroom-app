@@ -75,8 +75,6 @@ export default class Building extends Component {
               );
             }}
         />
-
-        {/* <ReviewButton dataHolder={this.state.buildingData} /> */}
       </View>
     );
   }
