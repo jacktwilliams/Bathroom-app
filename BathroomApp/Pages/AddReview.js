@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {autoCapitalize, Platform, StyleSheet, Text, View, Button, FlatList, Image, ActivityIndicator, TouchableOpacity, Dimensions, TextInput} from 'react-native';
 import consts from '../Utility/Constants';
 import StarRating from 'react-native-star-rating';
+import AdjBoxes from '../Components/AdjBoxes';
 // import console = require('console');
 
 const width = Dimensions.get('window').width;
@@ -9,14 +10,7 @@ const height = Dimensions.get('window').height;
 
 export default class AddReview extends Component {
 
- static navigationOptions = ({ navigation }) => {
-
-  let dataHolder = navigation.getParam("dataHolder", null);
-  let title;
-//   if (dataHolder.bathrooms) { //came here from buildings page
-//     title = dataHolder.build_name + " Reviews";
-//   } 
-  
+ static navigationOptions = ({ navigation }) => {  
   return {
     title: "Add a review",
     headerStyle: {
@@ -27,18 +21,13 @@ export default class AddReview extends Component {
 
   constructor(props) {
     super(props);
-    // this.toggle = this.toggle.bind(this);
-    let dataHolder = this.props.navigation.getParam("dataHolder", null);
-    let revList;
-    let cleanliness;
-    let stocked;
-    let quiet;
-    let review;
-
     this.state = {
-      cleanliness: false,
-      stocked: false,
-      quiet: false,
+      adjText1: "Clean",
+      adjText2: "Stocked",
+      adjText3: "Quiet",
+      clean: true,
+      stocked: true,
+      quiet: true,
       starCount: 3,
       review: ""
     };
@@ -50,33 +39,38 @@ export default class AddReview extends Component {
     });
   }
 
-  postClick(){
-    console.log(this.state);
-  }
+  _handleAdjBoxClick(adjId) {
+    let clean = this.state.clean; let stocked = this.state.stocked; let quiet = this.state.quiet;
+    if (adjId === 1) {
+      clean = !clean;
+    }
+    else if (adjId === 2) {
+      stocked = !stocked;
+    }
+    else {
+      quiet = !quiet;
+    }
 
-  setClean() {
-    console.log(this.state.cleanliness);
-  }
-  setStocked() {
-    console.log(this.state.stocked);
-  }
-  setQuiet() {
-    console.log(this.state.quiet);
+    this.setState({
+      clean: clean,
+      stocked: stocked,
+      quiet: quiet,
+      adjText1: clean ? "Clean" : "Dirty",
+      adjText2: stocked ? "Stocked" : "Empty",
+      adjText3: quiet ? "Quiet" : "Busy",
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.reviewbuttons}>
-            <View style={styles.reviewbuttonscontainers}>
-                <Button color="white" title="Clean" onPress={() => {this.setClean()}}></Button>
-            </View>
-            <View style={styles.reviewbuttonscontainers}>
-                <Button color="white" title="Stocked" onPress={() => {this.setStocked()}}></Button>
-            </View>
-            <View style={styles.reviewbuttonscontainers}>
-                <Button color="white" title="Quiet" onPress={() => {this.setQuiet()}}></Button>
-            </View>
+        <View style={styles.adjContainer}>
+          <AdjBoxes
+            adjText1 = {this.state.adjText1}
+            adjText2 = {this.state.adjText2}
+            adjText3 = {this.state.adjText3}
+            onClick = {this._handleAdjBoxClick.bind(this)}
+          />
         </View>
 
         <View style={styles.starcontainer}>
@@ -100,11 +94,12 @@ export default class AddReview extends Component {
         </View>    
         <View style={styles.postcontainer}>
             <View style={styles.buttonstyling}>
-                <Button 
-                onPress={() => {this.postClick()}}
-                color="white" 
-                title="Post"
-                />
+                <TouchableOpacity 
+                  onPress={() => {this.postClick()}}
+                  style={{justifyContent: 'center', alignItems: 'center'}}
+                >
+                  <Text style={{fontSize: 20}}>Post</Text>
+                </TouchableOpacity>
             </View>
         </View>
       </View>
@@ -122,18 +117,6 @@ const styles = StyleSheet.create({
   },
   HeaderTitle: {
     fontSize: 25
-  },
-  listedBuilding: {
-    marginLeft: 20,
-    marginTop: 30,
-    fontSize: 20,
-  },
-  tabContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: consts.accentColor,
-    height: height * .07,
   },
   reviewinput: {
     height: 50,
@@ -157,23 +140,6 @@ const styles = StyleSheet.create({
     height: 200,
     flex: 2,
   },
-  reviewbuttons: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    paddingLeft: 10,
-    paddingRight: 10,
-    flex: 1,
-  },
-  reviewbuttonscontainers: {
-    backgroundColor: consts.accentColor,
-    borderRadius:10,
-    borderWidth: 1,
-    borderColor: '#fff',
-    width: '25%',
-    height: 40,
-  },
   starcontainer: {
     paddingLeft: 20,
     paddingRight: 20,
@@ -190,5 +156,12 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       marginTop: 50,
       marginLeft: '70%'
-  }
+  },
+  adjContainer: {
+    width: width * .85,
+    height: height * .10,
+    marginTop: height * .03,
+    marginBottom: height * .02,
+    alignSelf: 'center',
+  },
 });
