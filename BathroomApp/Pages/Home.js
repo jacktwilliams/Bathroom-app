@@ -5,9 +5,10 @@ import ReviewsButton from '../Components/ReviewsButton';
 // import { SearchBar } from 'react-native-elements';
 
 
-const serverAddr = consts.addr;
+const serverAddr = consts.addr
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 
 
 export default class Institution extends Component {
@@ -22,7 +23,6 @@ export default class Institution extends Component {
 
   constructor(props) {
     super(props);
-    let searchinput;
 
     this.state = {
       institutionData: null,
@@ -32,10 +32,12 @@ export default class Institution extends Component {
       extraData: true,
       reviews: null,
       renderList: false, //flip this boolean to re-render flatlist
-      searchinput: ""
+      searchinput: "",
+      newInput: null,
+      input: null,
     };
 
-    // this.getInstitutionData();
+     this.getInstitutionData();
   }
 
   /*
@@ -56,17 +58,15 @@ export default class Institution extends Component {
         resultList: resJson,
      
         extraData: !this.state.extraData,
+        Input: this.state.Input,
+        newInput: this.state.searchinput.split(' ').join('%'),
       });
       console.log("Recieved institution data and parsed reviews and bathrooms into the correct buildings.");
+      console.log(this.state.newInput);
     })
     .catch((error) => {
       console.log("Error getting institution data from server (or error parsing json)\n" + error);
     });
-  }
-
-
-  handleSearch() {
-    console.log(this.state.searchinput);
   }
   
   render() {
@@ -75,25 +75,20 @@ export default class Institution extends Component {
 
       <View style={styles.container}>
 
+    <TextInput
+      style={styles.searchbar}
+      placeholder="Find your institution..."
+      keyboardType={"default"}
+      value={this.state.text}
+      onChangeText={(text) => this.setState({searchinput: text})}
+    /> 
+
+
       <Button 
       title="Search" 
       onPress={() => {this.getInstitutionData()}} 
       />
            
- {/* <SearchBar
-    placeholder="Search for an Institution..."
-    // onChangeText={(text) => this.setState({searchinput:text})}
-    // value={searchinput}
-  />  */}
-
-<TextInput
-  style={styles.searchbar}
-  placeholder="Search"
-  keyboardType={"default"}
-  value={this.state.text}
-  onChangeText={(text) => this.setState({searchinput: text})}
-/> 
-
         <FlatList 
             data={this.state.resultList}
             extraData={this.state.renderList}
@@ -105,7 +100,7 @@ export default class Institution extends Component {
                 <TouchableOpacity 
                   onPress={() => {
                     // console.log("Sending building data to building page: " + JSON.stringify(item.item));
-                     this.props.navigation.navigate("Institution", {renderList: item.item});
+                     this.props.navigation.navigate("Institution", {newInput: this.state.newInput});
                 }}>
                 <View style={styles.border}>
                   <Text style={styles.buildingNameStyling}>{item.item.org_name}</Text>
@@ -157,5 +152,6 @@ const styles = StyleSheet.create({
     height: 45,
     backgroundColor: '#e2e2e2',
     paddingLeft: 10
+
   }
 });
