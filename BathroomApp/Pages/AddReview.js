@@ -98,7 +98,7 @@ export default class AddReview extends Component {
                   onPress={() => {this.postClick()}}
                   style={{justifyContent: 'center', alignItems: 'center'}}
                 >
-                  <Text style={{fontSize: 20}}>Post</Text>
+                  <Text style={{fontSize: 20,color: 'white'}}>Post</Text>
                 </TouchableOpacity>
             </View>
         </View>

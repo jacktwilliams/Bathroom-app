@@ -61,16 +61,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   adjBox: {
-    height: '100%',
+    height: '50%',
     width: '25%',
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   adjBoxSelected: {
-    backgroundColor: 'blue',
+    backgroundColor: consts.accentColor,
   },
   adjBoxNotSelected: {
-    backgroundColor: 'grey',
+    backgroundColor: '#e2e2e2',
   },
   adjContainer: {
     width: '100%',
