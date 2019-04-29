@@ -37,7 +37,7 @@ export default class Institution extends Component {
       input: null,
     };
 
-     this.getInstitutionData();
+    //  this.getInstitutionData();
   }
 
   /*
@@ -58,8 +58,8 @@ export default class Institution extends Component {
         resultList: resJson,
      
         extraData: !this.state.extraData,
-        Input: this.state.Input,
-        newInput: this.state.searchinput.split(' ').join('%'),
+        // Input: this.state.Input,
+        // newInput: this.state.searchinput.split(' ').join('%'),
       });
       console.log("Recieved institution data and parsed reviews and bathrooms into the correct buildings.");
       console.log(this.state.newInput);
@@ -93,14 +93,15 @@ export default class Institution extends Component {
             data={this.state.resultList}
             extraData={this.state.renderList}
             keyExtractor={(item, index) => {
-              return index
+              return index.toString()
             }}
             renderItem={(item) => {
               return (
                 <TouchableOpacity 
                   onPress={() => {
                     // console.log("Sending building data to building page: " + JSON.stringify(item.item));
-                     this.props.navigation.navigate("Institution", {newInput: this.state.newInput});
+                    console.log("sending inst. to inst page: " + JSON.stringify(item.item))
+                     this.props.navigation.navigate("Institution", {Institution: item.item});
                 }}>
                 <View style={styles.border}>
                   <Text style={styles.buildingNameStyling}>{item.item.org_name}</Text>
