@@ -50,6 +50,8 @@ export default class ReviewList extends Component {
       title  = dataHolder.title;
     }
 
+    revList = this.removeReviewsWithoutText(revList);
+
     this.state = {
       reviews: revList,
       renderList: false, //flip this boolean to re-render flatlist
@@ -59,7 +61,19 @@ export default class ReviewList extends Component {
       bath_id: bath_id,
       title: title,
     };
+  }
 
+  removeReviewsWithoutText(revList) {
+    let finalList = [];
+    console.log(revList[0]);
+    for (let i = 0; i < revList.length; ++i) {
+      console.log("Review Text:\n\n" + revList[i].review_text);
+      if (revList[i].review_text != null && revList[i].review_text.replace(/\s+/g, '') != '') {
+        console.log("Keeping.");
+        finalList.push(revList[i]);
+      }
+    }
+    return finalList;
   }
 
   _renderAddButtonIfAppropriate() {

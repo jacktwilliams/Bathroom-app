@@ -65,9 +65,9 @@ CREATE TABLE review (
     user_id BIGINT UNSIGNED NOT NULL,
     review_text TEXT,
     stars DECIMAL(2, 1) NOT NULL, /* #0-9 with tenth values. Must constrain by other means to 0-5 with .5 increments */
-    clean SET('clean', 'dirty') NOT NULL,
-    stocked SET('stocked', 'empty') NOT NULL,
-    quiet SET('quiet', 'busy') NOT NULL,
+    clean SET('Clean', 'Dirty') NOT NULL,
+    stocked SET('Stocked', 'Empty') NOT NULL,
+    quiet SET('Quiet', 'Busy') NOT NULL,
     date_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, /* #auto set to submission time. Updated on edit. */
     PRIMARY KEY(review_id),
     FOREIGN KEY (org_id)

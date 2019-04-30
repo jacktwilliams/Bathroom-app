@@ -55,6 +55,6 @@ INSERT INTO bathroom(org_id, build_id, room_num, floor_num, loc_desc, change_sta
 	(1, 3, null, 1, "Near the iDesign Lab and kitchenette area", 1, 0, "M"),
     (1, 10, null, 2, "Near the glass offices with the white boards", 0, 0, "M");
 
-INSERT INTO review(org_id, build_id, bath_id, user_id, review_text, stars, wifi_stars, cell_stars, cell_providor) VALUES
-	(1, 3, 4, 2, "It was kinda smelly", 3, 4, null, null),
-    (1, 10, 5, 1, "This is the best bathroom on campus", 5, 4, 4, "Verizon");
+INSERT INTO review(org_id, build_id, bath_id, user_id, review_text, stars, clean, stocked, quiet) VALUES
+	(1, 3, 4, 2, "It was kinda smelly", 3, "Dirty", "Empty", "Busy"),
+    (1, 10, 5, 1, "This is the best bathroom on campus", 5, "Clean", "Stocked", "Quiet");

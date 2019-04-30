@@ -31,23 +31,29 @@ export default class LoginScreen extends Component {
 
   _handleCreatePressed = () => {
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(() => {
-      this.props.navigation.navigate('AppNav');
       let user = firebase.auth().currentUser;
       user.getIdToken(true)
       .then((tok) => {
         fetch(addr,
-          {
-            method: "POST",
-            headers: {
-              'Accept':'application/json',
-              'Content-Type':'application/json',
-            },
-            body: JSON.stringify({
-              uid: user.uid,
-              uname: user.displayName,
-              token: tok
-            })
-          });
+        {
+          method: "POST",
+          headers: {
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            uname: user.displayName,
+            token: tok
+          })
+        })
+        .then((res) => {
+          return res.json()
+        })
+        .then((resJson) => {
+          console.log("Sent new user details to server. Response: \n" + JSON.stringify(resJson));
+          this.props.navigation.navigate('AppNav');
+        });
       });
     }).catch((error) => {
       alert(error);

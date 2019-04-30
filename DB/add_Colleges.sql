@@ -20,3 +20,5 @@ INSERT INTO organization (org_name, org_city, org_state, org_country, latitude, 
 	SELECT schoolName, cityName, state, country, latitude, longitude
     FROM excel_table
     ORDER BY schoolName;
+    
+/*Use if error SET GLOBAL local_infile = 1; */

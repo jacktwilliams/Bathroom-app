@@ -4,6 +4,7 @@ const port = 3000;
 var mysql = require('mysql');
 var passw = require('./password.js');
 var bodyParser = require("body-parser");
+const fs = require('fs');
 
 app.use(express.json());
 
@@ -102,7 +103,7 @@ app.post("/newUser", (req, res) => {
     let queryString = "insert into user(fire_id, user_name) VALUE ('" + 
       req.body.uid + "', " + req.body.uname + ");";
     
-    conn.query(queryString, (err, res) => {
+    conn.query(queryString, (err, result) => {
       if(err) {
         console.log("Error adding user to DB.\n" + err);
       }
@@ -131,6 +132,47 @@ app.get("/search", (req, res) => {
       res.status(200).send(result);
     }
   });
+});
+
+app.post("/review", (req, res) => {
+  console.log("New Review posted.\n" + JSON.stringify(req.body));
+  conn.query("select user_id from user where fire_id = '" + req.body.uid + "';", (err, result1) => {
+    if (err) {
+      console.log("Error getting user given firebase id\n" + err);
+    }
+    else {
+      console.log("uid: " + JSON.stringify(result1));
+      let queryString = "insert into review (org_id, build_id, bath_id, user_id, stars, clean, stocked, quiet";
+
+      let valString = " VALUES (" + req.body.org_id + ", " + req.body.build_id + ", " +
+        req.body.bath_id + ", " + result1[0].user_id + ", " + req.body.stars + ", '" + req.body.clean + "', '" +
+        req.body.stocked + "', '" + req.body.quiet;
+        if (req.body.review_text) {
+          queryString += ", review_text)"
+          valString += "', '" + req.body.review_text + "');";
+        }
+        else {
+          queryString += ")"
+          valString += "');"
+        }
+    
+        console.log(queryString + valString);
+        conn.query(queryString + valString, (err, results) => {
+          if (err) {
+            console.log("Error posting review\n" + err);
+          }
+          else {
+            console.log("Success. Response: \n" + JSON.stringify(results));
+            res.status(200).send();
+          }
+        });
+    }
+  })
+
+});
+
+app.get("/admin", (req, res) => {
+
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

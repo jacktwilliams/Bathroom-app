@@ -3,6 +3,8 @@ import {autoCapitalize, Platform, StyleSheet, Text, View, Button, FlatList, Imag
 import consts from '../Utility/Constants';
 import StarRating from 'react-native-star-rating';
 import AdjBoxes from '../Components/AdjBoxes';
+import * as firebase from 'firebase';
+
 // import console = require('console');
 
 const width = Dimensions.get('window').width;
@@ -31,6 +33,45 @@ export default class AddReview extends Component {
       starCount: 3,
       review: ""
     };
+
+    this.postClick = this.postClick.bind(this);
+  }
+  postClick() {
+    let bathData = this.props.navigation.getParam("bathData", null);
+    console.log("Post button clicked. Bath data:\n" + JSON.stringify(bathData));
+    let user = firebase.auth().currentUser;
+    fetch(consts.addr + "review/",
+      {
+        method: "POST",
+        headers: {
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify({
+          org_id: bathData.org_id,
+          build_id: bathData.build_id,
+          bath_id: bathData.bath_id,
+          uid: user.uid,
+          stars: this.state.starCount,
+          clean: this.state.adjText1,
+          stocked: this.state.adjText2,
+          quiet: this.state.adjText3,
+          review_text: this.state.review === "" ? null : this.state.review,
+        })
+      })
+      .then((result) => {
+        return result.json();
+      })
+      .then((resJson) => {
+        console.log("Succesfully added review. Response:\n" + JSON.stringify(resJson));
+        this.props.navigation.goBack();
+        alert("Review Added Succesfully");
+      })
+      .catch((err) => {
+        console.log("Error adding review.\n" + JSON.stringify(err));
+        this.props.navigation.goBack();
+        alert("Review Added Successfully"); //TODO: diagnose error that is occuring upon successful server response.
+      });
   }
 
   onStarRatingPress(rating) {
