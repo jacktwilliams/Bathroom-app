@@ -5,30 +5,41 @@ import ReviewsButton from '../Components/ReviewsButton';
 import StarRating from 'react-native-star-rating';
 
 
-const serverAddr = consts.addr + "?institution=Winona%20State%20University";
+// const serverAddr = consts.addr + "?institution=Winona%20State%20University";
+const serverAddr = consts.addr;
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default class Institution extends Component {
 
- static navigationOptions = {
-   title: 'Winona State University',
-   headerStyle: {
-    backgroundColor: consts.accentColor,
-  }
- }
+//  static navigationOptions = {
+//    title: 'Winona State University',
+//    headerStyle: {
+//     backgroundColor: consts.accentColor,
+//   }
+//  }
+ static navigationOptions = ({ navigation }) => {
+  return {
+    title: navigation.getParam('Institution', null).org_name,
+    headerStyle: {
+      backgroundColor: consts.accentColor,
+    }
+  };
+};
 
   constructor(props) {
     super(props);
-
+    let chosenInstitution = this.props.navigation.getParam("Institution", null);
+    // let chosen = this.state.chosenInstitution.split(' ').join('%20');
     this.state = {
+      chosenInstitution: chosenInstitution.org_name,
       institutionData: null,
       buildings: [],
       bathrooms: null,
       reviews: null,
       renderList: false, //flip this boolean to re-render flatlist
     };
-
+    console.log(chosenInstitution.org_name);
     this.getInstitutionData();
   }
 
@@ -37,6 +48,7 @@ export default class Institution extends Component {
     In Building we will put the reviews into the corresponding bathrooms.
   */
   moveBathroomsAndReviewsIntoBuildings() {
+    
     let buildings = this.state.buildings;
     let bathrooms = this.state.bathrooms;
     let reviews = this.state.reviews;
@@ -66,7 +78,9 @@ export default class Institution extends Component {
   }
 
   getInstitutionData() {
-    fetch(serverAddr)
+   let test = serverAddr + this.state.chosenInstitution.split(' ').join('%20');
+   console.log("test address:" + test);
+    fetch(serverAddr + "?institution=" + this.state.chosenInstitution.split(' ').join('%20'))
     .then((res) => {
       return res.json();
     })
