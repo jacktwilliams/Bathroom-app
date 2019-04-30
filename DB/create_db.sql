@@ -87,3 +87,12 @@ CREATE TABLE review (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+CREATE TABLE report (
+	report_id SERIAL NOT NULL,
+    review_id BIGINT UNSIGNED NOT NULL,
+    FOREIGN KEY (review_id)
+		REFERENCES review(review_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);

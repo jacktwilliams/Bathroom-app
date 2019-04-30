@@ -5,8 +5,13 @@ var mysql = require('mysql');
 var passw = require('./password.js');
 var bodyParser = require("body-parser");
 const fs = require('fs');
+var path = require('path');
 
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(express.json());
+//app.use(express.static(path.join(__dirname, 'adminViews')));
 
 var conn = mysql.createConnection({
     host : 'localhost',
@@ -171,8 +176,59 @@ app.post("/review", (req, res) => {
 
 });
 
+const htmlHeader = '<!doctype html> <html lang="en"> <head><meta charset="utf-i"> <title>Review Reports</title></head> <body>';
+const htmlCloser = '</body></html>';
 app.get("/admin", (req, res) => {
+  console.log("New request for admin page.");
+  let qString = "select review_id, review_text from review where review_id in (select review_id from report);"
+  conn.query(qString, (err, results) => {
+    if (err) {
+      console.log("Error review for admin page.\n" + err);
+    }
+    else {
+      console.log("Success getting reported reviews. Response: \n" + JSON.stringify(results));
+      
+      let htmlS = htmlHeader;
+      for (let i = 0; i < results.length; ++i) {
+        if (results[i].review_text != null) {
+          htmlS += '<p>' + results[i].review_text + '</p>';
+          htmlS += '<form action="/admin/resolve" method="post"> <input name="review_id" type="hidden" value="' + results[i].review_id + '">' +
+            '<input name="Resolve" type="Submit" value="Ignore"><input name="Resolve" type="Submit" value="Remove"></form><hr>';
+        }
+      }
+      htmlS += htmlCloser;
+      fs.writeFile(path.join(__dirname, "adminViews","resolvePage.html"), htmlS, function (err) {
+        if (err ) {
+          console.log("Error saving generated html page.\n" + err);
+        }
+        else {
+          console.log("Gen'd file was saved.");
+          res.sendfile(path.join(__dirname, "adminViews", "resolvePage.html"));
+        }
+      });
+    }
+  });
+});
 
+app.post("/admin/resolve", (req, res) => {
+  console.log("Admin resolved a report.\n" + JSON.stringify(req.body));
+  let qString;
+  let review_id = parseInt(req.body.review_id);
+  if (req.body.Resolve === "Remove") {
+    qString = "DELETE FROM review where review_id = " + review_id + ";";
+  }
+  else {
+    qString = "DELETE FROM report where review_id = " + review_id + ";";
+  }
+
+  conn.query(qString, (err, results) => {
+    if (err) {
+      console.log("Error resolving review in database.\n" + err);
+    }
+    else {
+      console.log("Successfully resolved review in database.\n" + JSON.stringify(results));
+    }
+  });
 });
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

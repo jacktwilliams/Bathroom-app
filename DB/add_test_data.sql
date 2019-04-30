@@ -58,3 +58,7 @@ INSERT INTO bathroom(org_id, build_id, room_num, floor_num, loc_desc, change_sta
 INSERT INTO review(org_id, build_id, bath_id, user_id, review_text, stars, clean, stocked, quiet) VALUES
 	(1, 3, 4, 2, "It was kinda smelly", 3, "Dirty", "Empty", "Busy"),
     (1, 10, 5, 1, "This is the best bathroom on campus", 5, "Clean", "Stocked", "Quiet");
+
+/*Inserted after some data has been added to reviews (this script was ran outside of the database initialization flow).
+Review 4 for example won't exist if you run the script sequence for starting a new database.*/
+INSERT INTO report(review_id) VALUES (1), (2), (4);
